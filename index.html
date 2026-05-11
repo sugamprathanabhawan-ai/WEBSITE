@@ -104,141 +104,144 @@
         </div>
     </div>
 
-    <script>
-        // --- Chatbot UI Logic ---
-        const chatbotToggle = document.getElementById('chatbot-toggle');
-        const chatbotWindow = document.getElementById('chatbot-window');
-        const chatbotClose = document.getElementById('chatbot-close');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const chatSend = document.getElementById('chat-send');
+ <script>
+    // --- Chatbot UI Logic ---
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
 
-        function toggleChat() {
-            if (chatbotWindow.classList.contains('hidden')) {
-                chatbotWindow.classList.remove('hidden');
-                // Trigger reflow
-                void chatbotWindow.offsetWidth;
-                chatbotWindow.classList.remove('translate-y-4', 'opacity-0');
-                chatbotToggle.classList.remove('float');
-            } else {
-                chatbotWindow.classList.add('translate-y-4', 'opacity-0');
-                setTimeout(() => {
-                    chatbotWindow.classList.add('hidden');
-                    chatbotToggle.classList.add('float');
-                }, 300);
-            }
+    const GROQ_API_KEY = "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";
+
+    function toggleChat() {
+        if (chatbotWindow.classList.contains('hidden')) {
+            chatbotWindow.classList.remove('hidden');
+            void chatbotWindow.offsetWidth;
+            chatbotWindow.classList.remove('translate-y-4', 'opacity-0');
+            chatbotToggle.classList.remove('float');
+        } else {
+            chatbotWindow.classList.add('translate-y-4', 'opacity-0');
+            setTimeout(() => {
+                chatbotWindow.classList.add('hidden');
+                chatbotToggle.classList.add('float');
+            }, 300);
         }
+    }
 
-        chatbotToggle.addEventListener('click', toggleChat);
-        chatbotClose.addEventListener('click', toggleChat);
+    chatbotToggle.addEventListener('click', toggleChat);
+    chatbotClose.addEventListener('click', toggleChat);
 
-        // --- Chat Functionality ---
-        const GEMINI_API_KEY = "AIzaSyBJuyUGhrYx-37PzpmO-iAKQSAfJ_9VZwo";
+    function addMessage(text, isUser = false) {
+        const div = document.createElement('div');
+        div.className = `p-3 rounded-2xl max-w-[85%] text-sm shadow-md leading-relaxed ${
+            isUser 
+            ? 'bg-blue-600 text-white self-end rounded-tr-sm' 
+            : 'bg-gray-700 text-white self-start rounded-tl-sm'
+        }`;
+        div.textContent = text;
+        chatMessages.appendChild(div);
+        scrollToBottom();
+    }
 
-        function addMessage(text, isUser = false) {
-            const div = document.createElement('div');
-            div.className = `p-3 rounded-2xl max-w-[85%] text-sm shadow-md leading-relaxed ${
-                isUser 
-                ? 'bg-blue-600 text-white self-end rounded-tr-sm' 
-                : 'bg-gray-700 text-white self-start rounded-tl-sm'
-            }`;
-            div.textContent = text;
-            chatMessages.appendChild(div);
-            scrollToBottom();
-        }
+    function showTypingIndicator() {
+        const div = document.createElement('div');
+        div.id = 'typing-indicator';
+        div.className = 'bg-gray-700 text-white self-start p-3 rounded-2xl rounded-tl-sm max-w-[85%] text-sm text-gray-400 italic shadow-md flex gap-1 items-center';
+        div.innerHTML = '<span class="animate-bounce">•</span><span class="animate-bounce" style="animation-delay: 0.2s">•</span><span class="animate-bounce" style="animation-delay: 0.4s">•</span>';
+        chatMessages.appendChild(div);
+        scrollToBottom();
+    }
 
-        function showTypingIndicator() {
-            const div = document.createElement('div');
-            div.id = 'typing-indicator';
-            div.className = 'bg-gray-700 text-white self-start p-3 rounded-2xl rounded-tl-sm max-w-[85%] text-sm text-gray-400 italic shadow-md flex gap-1 items-center';
-            div.innerHTML = '<span class="animate-bounce">•</span><span class="animate-bounce" style="animation-delay: 0.2s">•</span><span class="animate-bounce" style="animation-delay: 0.4s">•</span>';
-            chatMessages.appendChild(div);
-            scrollToBottom();
-        }
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+    }
 
-        function removeTypingIndicator() {
-            const indicator = document.getElementById('typing-indicator');
-            if (indicator) indicator.remove();
-        }
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
+    // Groq API Call
+    async function fetchGroqResponse(prompt) {
+        const url = "https://api.groq.com/openai/v1/chat/completions";
+        
+        const systemPrompt = `You are a respectful, kind, and knowledgeable Christian assistant for Sugam Prathana Bhawan church. 
+        Answer warmly and helpfully about church services, location, faith, Bible, prayer, or any spiritual questions. 
+        Keep answers short and clear.`;
 
-        // Fetch response from Gemini
-        async function fetchGeminiResponse(prompt) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+        const requestBody = {
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: prompt }
+            ],
+            temperature: 0.7,
+            max_tokens: 600
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${GROQ_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) throw new Error("API Error");
             
-            // Injecting context to ensure the AI knows its persona and scope
-            const contextualPrompt = `You are a respectful, knowledgeable Christian assistant for a church named "Sugam Prathana Bhawan". Please provide short, kind, and accurate answers to the following user query about Christianity, the Bible, Jesus, prayer, or faith.\n\nUser Query: ${prompt}`;
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+        } catch (error) {
+            console.error("Groq Error:", error);
+            return "Sorry, I'm having trouble connecting right now. Please try again later.";
+        }
+    }
 
-            const requestBody = {
-                contents: [{ parts: [{ text: contextualPrompt }] }]
-            };
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestBody)
-                });
-                
-                if (!response.ok) throw new Error("API request failed");
-                
-                const data = await response.json();
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    return data.candidates[0].content.parts[0].text;
-                }
-                return "I'm sorry, I couldn't formulate an answer for that.";
-            } catch (error) {
-                console.error("Gemini API Error:", error);
-                return "Sorry, I am having trouble connecting right now. Please try again later.";
-            }
+    // Process user input
+    async function processMessage(msg) {
+        const lowerMsg = msg.toLowerCase();
+        
+        // Predefined quick replies
+        if (lowerMsg.includes('location') || lowerMsg.includes('where') || lowerMsg.includes('address')) {
+            return "Our church is located at Katyanichowk, Baneshwor.";
+        } 
+        if (lowerMsg.includes('youth service') || lowerMsg.includes('youth')) {
+            return "Youth service timings are from 12:30 PM to 1:00 PM.";
+        } 
+        if (lowerMsg.includes('service time') || lowerMsg.includes('service')) {
+            return "Our regular service time is from 11:00 AM to 1:00 PM.";
+        } 
+        if (lowerMsg.includes('denomination')) {
+            return "We belong to the Trinity (Protestant) denomination.";
         }
 
-        // Process user input
-        async function processMessage(msg) {
-            const lowerMsg = msg.toLowerCase();
-            
-            // 1. Predefined Rule-based Responses
-            if (lowerMsg.includes('location') || lowerMsg.includes('where is') || lowerMsg.includes('address')) {
-                return "Our church is located at Katyanichowk, Baneshwor.";
-            } else if (lowerMsg.includes('youth service') || lowerMsg.includes('youth')) {
-                return "Youth service timings are from 12:30 PM to 1:00 PM.";
-            } else if (lowerMsg.includes('service time') || lowerMsg.includes('time') || lowerMsg.includes('when is service')) {
-                return "Our regular service time is from 11:00 AM to 1:00 PM.";
-            } else if (lowerMsg.includes('denomination') || lowerMsg.includes('what kind of church')) {
-                return "We belong to the Trinity (Protestant) denomination.";
-            } 
-            
-            // 2. Dynamic Christian Knowledge via Gemini API
-            showTypingIndicator();
-            const response = await fetchGeminiResponse(msg);
-            removeTypingIndicator();
-            return response;
-        }
+        // Use Groq AI for everything else
+        showTypingIndicator();
+        const reply = await fetchGroqResponse(msg);
+        removeTypingIndicator();
+        return reply;
+    }
 
-        // Send button handler
-        async function handleSend() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            
-            // Add user msg
-            addMessage(text, true);
-            chatInput.value = '';
-            
-            // Get and add bot response
-            const reply = await processMessage(text);
-            if (reply) {
-                addMessage(reply, false);
-            }
-        }
+    // Send message
+    async function handleSend() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        
+        addMessage(text, true);
+        chatInput.value = '';
+        
+        const reply = await processMessage(text);
+        addMessage(reply, false);
+    }
 
-        chatSend.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
-
-    </script>
+    chatSend.addEventListener('click', handleSend);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSend();
+    });
+</script>
 </body>
 </html>
