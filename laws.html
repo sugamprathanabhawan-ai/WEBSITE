@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sugam Choir - Church Laws</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      color: #000000;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .glass-modal {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f1f5f9] pt-28 pb-12 px-4 sm:px-8">
+
+<nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-5 py-3 shadow-lg w-fit">
+    <a href="index.html"
+       class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">
+        Home
+    </a>
+</nav>
+
+  <!-- Main Content Area -->
+  <div class="max-w-6xl mx-auto space-y-8">
+    
+    <!-- Header -->
+    <div class="text-center relative pt-4 pb-2">
+      <h1 class="text-5xl font-extrabold text-black tracking-tighter leading-none mb-3">
+        Church <span class="text-blue-600">Laws</span>
+      </h1>
+    </div>
+
+    <!-- PDF List & Renderer Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Discovered PDFs List -->
+      <div class="lg:col-span-4 space-y-4">
+        <div class="glass rounded-[2rem] p-6 shadow-lg border border-white">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-extrabold text-lg text-black">Available Documents</h2>
+            <button onclick="scanLawFolder()" class="text-xs bg-slate-100 hover:bg-slate-200 font-bold px-3 py-1.5 rounded-full transition-all">
+              🔄 Refresh Folder
+            </button>
+          </div>
+
+          <!-- Loading State -->
+          <div id="statusMessage" class="text-sm font-bold text-slate-400 italic py-6 text-center">
+            Loading law documents...
+          </div>
+
+          <!-- PDF Buttons Container -->
+          <div id="pdfList" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- Right Column: Inline Embedded PDF Viewer -->
+      <div class="lg:col-span-8">
+        <div class="glass rounded-[2.5rem] shadow-2xl p-4 sm:p-6 border border-white min-h-[650px] flex flex-col">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-black/10 px-2">
+            <h3 id="currentPdfTitle" class="font-black text-xl text-black truncate">Select a Law Document</h3>
+            <a id="openNewTabBtn" href="#" target="_blank" class="hidden text-xs font-bold bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition-all">
+              Open Fullscreen ↗
+            </a>
+          </div>
+
+          <!-- Embedded PDF Viewer Box -->
+          <div class="flex-grow bg-slate-200 rounded-[1.5rem] overflow-hidden relative min-h-[550px] flex items-center justify-center">
+            <div id="placeholderText" class="text-center p-8">
+              <span class="text-5xl mb-4 block">📄</span>
+              <p class="font-extrabold text-slate-500">Select any PDF from the list to preview it here.</p>
+            </div>
+            <iframe id="pdfFrame" class="w-full h-full absolute inset-0 border-none hidden" title="PDF Reader"></iframe>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const FOLDER_PATH = './law/';
+    const pdfListContainer = document.getElementById('pdfList');
+    const statusMessage = document.getElementById('statusMessage');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const placeholderText = document.getElementById('placeholderText');
+    const currentPdfTitle = document.getElementById('currentPdfTitle');
+    const openNewTabBtn = document.getElementById('openNewTabBtn');
+
+    async function scanLawFolder() {
+      statusMessage.innerText = "Loading law documents...";
+      statusMessage.classList.remove('hidden');
+      pdfListContainer.innerHTML = '';
+
+      try {
+        const response = await fetch(FOLDER_PATH);
+        if (!response.ok) throw new Error("Could not access directory.");
+        
+        const htmlText = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        const links = Array.from(doc.querySelectorAll('a'));
+        
+        const pdfFiles = links
+          .map(a => a.getAttribute('href'))
+          .filter(href => href && href.toLowerCase().endsWith('.pdf'))
+          .map(href => decodeURIComponent(href.split('/').pop()));
+
+        const uniquePdfs = [...new Set(pdfFiles)];
+
+        if (uniquePdfs.length === 0) {
+          attemptKnownFileCheck();
+          return;
+        }
+
+        statusMessage.classList.add('hidden');
+        renderPdfList(uniquePdfs);
+
+      } catch (error) {
+        console.warn("Folder Auto-index unavailable on static host, using default documents list:", error);
+        attemptKnownFileCheck();
+      }
+    }
+
+    function attemptKnownFileCheck() {
+      const fallbackList = ['constitution.pdf', 'attendance-rules.pdf', 'dress-code.pdf', 'guidelines.pdf'];
+      statusMessage.classList.add('hidden');
+      renderPdfList(fallbackList);
+    }
+
+    function renderPdfList(files) {
+      pdfListContainer.innerHTML = '';
+
+      files.forEach((filename, index) => {
+        const cleanName = filename.replace('.pdf', '').replace(/[-_]/g, ' ');
+
+        const button = document.createElement('button');
+        button.className = `w-full text-left p-4 rounded-[1.2rem] bg-white hover:bg-black hover:text-white transition-all shadow-sm flex items-center justify-between group border border-slate-100`;
+        
+        button.innerHTML = `
+          <div class="flex items-center gap-3 overflow-hidden">
+            <span class="text-xl">📜</span>
+            <span class="font-bold text-sm truncate capitalize">${cleanName}</span>
+          </div>
+          <span class="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-bold">View &rarr;</span>
+        `;
+
+        const fullFilePath = `${FOLDER_PATH}${filename}`;
+        button.onclick = () => renderPdf(fullFilePath, cleanName);
+
+        pdfListContainer.appendChild(button);
+
+        if (index === 0) {
+          renderPdf(fullFilePath, cleanName);
+        }
+      });
+    }
+
+    function renderPdf(filePath, title) {
+      currentPdfTitle.innerText = title;
+      pdfFrame.src = filePath;
+      pdfFrame.classList.remove('hidden');
+      placeholderText.classList.add('hidden');
+      openNewTabBtn.href = filePath;
+      openNewTabBtn.classList.remove('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', scanLawFolder);
+  </script>
+</body>
+</html>

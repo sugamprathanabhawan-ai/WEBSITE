@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Fellowship Routine - Sugam Prathana Bhawan</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Merriweather:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#87ceeb',
+                            600: '#38bdf8',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        inter: ['"Inter"', 'sans-serif'],
+                        merriweather: ['"Merriweather"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+        .font-merri {
+            font-family: 'Merriweather', serif;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .print-header { display: none; }
+        
+        @media print {
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .month-card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                margin-bottom: 2rem !important;
+            }
+            .print-header {
+                display: block;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .print-row { border-bottom: 1px solid #e2e8f0 !important; }
+        }
+    </style>
+</head>
+<body class="bg-sky-50/50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Wrapper -->
+    <header id="main-header" class="no-print fixed top-0 left-0 w-full z-50 flex flex-col transition-all duration-300 bg-white shadow-md">
+        <!-- Quick Nav Bar -->
+        <div id="quick-nav" class="bg-primary-900 text-white py-1.5 px-6 md:px-12 flex justify-end gap-6 text-sm border-b border-primary-600/30">
+            <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-book-bible"></i> Bible
+            </a>
+            <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-music"></i> Bhajan
+            </a>
+            <a href="https://sugamca.netlify.app/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-clipboard-check"></i> Attendance
+            </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="navbar" class="w-full py-3 px-6 md:px-12 bg-white">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="flex items-center gap-3 text-gray-800 z-50 group">
+                    <img src="images/logos.png" alt="Sugam Prathana Bhawan Logo" class="w-10 h-10 rounded-full object-cover shadow-lg" onerror="this.src='https://via.placeholder.com/40'"/>
+                    <span class="font-semibold text-lg md:text-xl tracking-wide text-gray-800">
+                        Sugam Prathana Bhawan
+                    </span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
+                    <a href="index.html" class="hover:text-primary-500 transition">Home</a>
+                    <a href="youthroutine.html" class="text-primary-500 font-semibold transition">Youth</a>
+                    <a href="choir.html" class="hover:text-primary-500 transition">Choir</a>
+                    <a href="calender.html" class="hover:text-primary-500 transition">Calendar</a>
+                    <a href="index.html#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 text-2xl z-50 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
+                <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
+                <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
+                <a href="https://sugamca.netlify.app/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+                <hr class="w-16 border-gray-300 my-2">
+                <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
+                <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
+                <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
+                <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex flex-col items-center px-4 pb-12 w-full pt-32">
+        
+        <!-- Action Toolbar (Save Routine Button) -->
+        <div class="no-print max-w-4xl mx-auto w-full px-2 mb-4 flex justify-end items-center">
+            <button onclick="openSaveModal()" class="inline-flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium rounded-xl shadow-sm transition-all focus:ring-2 focus:ring-sky-500 focus:outline-none cursor-pointer">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Save Routine
+            </button>
+        </div>
+
+        <!-- Header Section -->
+        <header class="text-center mb-6 mt-2 no-print fade-in">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-2">Youth Fellowship Routine</h1>
+            <p class="text-lg text-sky-700 font-medium">Sugam Prathana Bhawan</p>
+            <p id="today-date" class="text-sm text-slate-500 mt-2 font-medium"></p>
+        </header>
+
+        <!-- Printable / Main Area -->
+        <div id="print-area" class="w-full max-w-4xl space-y-6">
+            
+            <div class="print-header font-serif">
+                <h1 class="text-3xl font-bold text-black mb-1">Youth Fellowship Routine</h1>
+                <h2 class="text-xl text-gray-700">Sugam Prathana Bhawan</h2>
+            </div>
+
+            <div id="notice-container"></div>
+
+            <div id="loading-state" class="p-12 text-center text-slate-500 flex flex-col items-center">
+                <svg class="animate-spin h-8 w-8 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <p class="font-medium">Loading routines and notices...</p>
+            </div>
+
+            <div id="error-state" class="hidden p-12 text-center text-red-600 flex flex-col items-center">
+                <svg class="h-12 w-12 text-red-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p class="font-medium text-lg mb-1">Failed to load content</p>
+                <p id="error-message" class="text-sm text-red-400">Please make sure youthroutine.txt exists.</p>
+            </div>
+
+            <div id="months-container" class="space-y-8"></div>
+
+        </div>
+    </main>
+
+    <!-- Save Options Modal -->
+    <div id="save-modal" class="no-print fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center transform transition-all border border-slate-100">
+            <div class="w-12 h-12 bg-sky-100 text-sky-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Save Routine</h3>
+            <p class="text-sm text-slate-500 mb-6">Choose how you would like to download the routine schedule.</p>
+            
+            <div class="space-y-3">
+                <button onclick="saveAsPDF()" class="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl text-sm transition-colors flex items-center justify-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    Save as PDF Document
+                </button>
+                <button onclick="downloadRawFile()" class="w-full py-3 px-4 bg-sky-50 hover:bg-sky-100 text-sky-800 font-medium rounded-xl text-sm transition-colors flex items-center justify-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download Text File (.txt)
+                </button>
+            </div>
+
+            <button onclick="closeSaveModal()" class="mt-5 text-xs text-slate-400 hover:text-slate-600 font-medium cursor-pointer">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="no-print w-full text-center py-6 text-slate-500 text-sm mt-auto border-t border-gray-200">
+        &copy; <span id="year"></span> Sugam Prathana Bhawan. All rights reserved.
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('translate-x-full') 
+                    ? '<i class="fa-solid fa-bars"></i>' 
+                    : '<i class="fa-solid fa-xmark text-gray-800"></i>';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                });
+            });
+        }
+
+        let rawRoutineText = "";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const todayElement = document.getElementById('today-date');
+            const todayObj = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            todayElement.textContent = "Today is " + todayObj.toLocaleDateString('en-US', dateOptions);
+
+            loadRoutineData();
+        });
+
+        async function loadRoutineData() {
+            const loadingState = document.getElementById('loading-state');
+            const errorState = document.getElementById('error-state');
+            const errorMessage = document.getElementById('error-message');
+            const monthsContainer = document.getElementById('months-container');
+            const noticeContainer = document.getElementById('notice-container');
+
+            try {
+                const response = await fetch('youthroutine.txt');
+                if (!response.ok) throw new Error(`File not found (Status: ${response.status})`);
+
+                rawRoutineText = await response.text();
+                
+                const blocks = rawRoutineText.split(/\n\s*\n/).map(block => block.trim()).filter(block => block.length > 0);
+
+                if (blocks.length === 0) {
+                    throw new Error('The youthroutine.txt file is empty.');
+                }
+
+                let containerHTML = '';
+                let noticesHTML = '';
+
+                blocks.forEach((block, blockIndex) => {
+                    const lines = block.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+                    if (lines.length === 0) return;
+
+                    const firstLine = lines[0].toLowerCase();
+
+                    if (firstLine.includes('[notices]') || firstLine === 'notices') {
+                        const noticeItems = lines.slice(1);
+                        if (noticeItems.length > 0) {
+                            let listItems = '';
+                            noticeItems.forEach(item => {
+                                listItems += `<li class="flex items-start"><span class="text-sky-500 mr-2.5 font-bold">•</span><span class="leading-relaxed">${item}</span></li>`;
+                            });
+
+                            noticesHTML = `
+                                <div class="bg-white rounded-2xl p-5 border border-sky-100 shadow-md shadow-sky-100/50 flex items-start space-x-4 fade-in">
+                                    <div class="bg-sky-50 text-sky-600 p-3 rounded-xl flex-shrink-0">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                    </div>
+                                    <div class="w-full">
+                                        <h3 class="text-base font-bold text-slate-900 flex items-center mb-2">
+                                            Notice / सूचना
+                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-sky-100 text-sky-800">Important</span>
+                                        </h3>
+                                        <ul class="space-y-1.5 text-sm text-slate-600">
+                                            ${listItems}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        const monthTitle = lines[0];
+                        const dataRows = lines.slice(1);
+
+                        let tableRowsHTML = '';
+
+                        dataRows.forEach((row) => {
+                            const columns = row.split('|');
+                            if (columns.length >= 2) {
+                                const numOrDate = columns[0].trim();
+                                const typeText = columns[1].trim();
+
+                                tableRowsHTML += `
+                                    <tr class="odd:bg-white even:bg-sky-50/40 hover:bg-sky-100/50 transition-colors print-row">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-sky-900 border-b border-sky-100/60 w-1/4">
+                                            ${numOrDate}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-800 border-b border-sky-100/60 w-3/4">
+                                            ${typeText}
+                                        </td>
+                                    </tr>
+                                `;
+                            }
+                        });
+
+                        containerHTML += `
+                            <div class="month-card fade-in" style="animation-delay: ${blockIndex * 0.15}s;">
+                                <div class="bg-sky-600 rounded-t-2xl p-4 text-center shadow-sm">
+                                    <h2 class="text-xl font-bold text-white tracking-wide uppercase font-serif">${monthTitle}</h2>
+                                </div>
+                                <div class="bg-white shadow-xl shadow-sky-100/80 rounded-b-2xl border border-sky-100 overflow-hidden">
+                                    <div class="w-full overflow-x-auto">
+                                        <table class="w-full text-left border-collapse">
+                                            <thead class="bg-sky-100/70 text-sky-950 border-b border-sky-200">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wider w-1/4">S.N. / Date</th>
+                                                    <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wider w-3/4">Fellowship Type</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-sky-50 text-slate-700">
+                                                ${tableRowsHTML}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                noticeContainer.innerHTML = noticesHTML;
+                monthsContainer.innerHTML = containerHTML;
+                loadingState.classList.add('hidden');
+
+            } catch (error) {
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                errorMessage.textContent = error.message;
+                console.error("Routine Load Error:", error);
+            }
+        }
+
+        function openSaveModal() {
+            document.getElementById('save-modal').classList.remove('hidden');
+        }
+
+        function closeSaveModal() {
+            document.getElementById('save-modal').classList.add('hidden');
+        }
+
+        function saveAsPDF() {
+            closeSaveModal();
+            window.print();
+        }
+
+        function downloadRawFile() {
+            closeSaveModal();
+            const blob = new Blob([rawRoutineText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'youthroutine.txt';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

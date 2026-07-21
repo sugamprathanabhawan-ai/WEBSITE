@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Calendar | Sugam Prathana Bhawan</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#87ceeb',
+                            600: '#38bdf8',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        inter: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        .loader {
+            border: 4px solid rgba(125, 211, 252, 0.3);
+            border-top: 4px solid #38bdf8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-slate-50 antialiased h-screen flex flex-col overflow-hidden selection:bg-sky-300 selection:text-sky-950">
+
+    <!-- Header & Navigation Wrapper -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 flex flex-col transition-all duration-300 bg-white shadow-md">
+        <!-- Quick Nav Bar -->
+        <div id="quick-nav" class="bg-primary-900 text-white py-1.5 px-6 md:px-12 flex justify-end gap-6 text-sm border-b border-primary-600/30">
+            <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-book-bible"></i> Bible
+            </a>
+            <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-music"></i> Bhajan
+            </a>
+            <a href="https://sugamca.netlify.app/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-clipboard-check"></i> Attendance
+            </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="navbar" class="w-full py-3 px-6 md:px-12 bg-white">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="flex items-center gap-3 text-gray-800 z-50 group">
+                    <img src="images/logos.webp" alt="Sugam Prathana Bhawan Logo" class="w-10 h-10 rounded-full object-cover shadow-lg" onerror="this.src='https://via.placeholder.com/40'"/>
+                    <span class="font-semibold text-lg md:text-xl tracking-wide text-gray-800">
+                        Sugam Prathana Bhawan
+                    </span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
+                    <a href="index.html" class="hover:text-primary-500 transition">Home</a>
+                    <a href="youthroutine.html" class="hover:text-primary-500 transition">Youth</a>
+                    <a href="choir.html" class="hover:text-primary-500 transition">Choir</a>
+                    <a href="calender.html" class="text-primary-500 font-semibold transition">Calendar</a>
+                    <a href="index.html#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 text-2xl z-50 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
+                <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
+                <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
+                <a href="https://sugamca.netlify.app/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+                <hr class="w-16 border-gray-300 my-2">
+                <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
+                <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
+                <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
+                <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content: Full Screen PDF Viewer -->
+    <main class="flex-1 relative bg-slate-200/50 pt-[104px]">
+        
+        <!-- Preserved File Selector Sub-bar -->
+        <div id="file-selector-container" class="hidden absolute top-[115px] right-6 z-30">
+            <select id="file-selector" class="bg-sky-900 border border-sky-700 text-sky-100 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 cursor-pointer outline-none shadow-lg">
+                <!-- Options injected via JS -->
+            </select>
+        </div>
+
+        <!-- Loading State -->
+        <div id="viewer-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 pt-20">
+            <div class="loader mb-4"></div>
+            <p class="text-sky-900 font-medium animate-pulse" id="loading-text">Scanning for Calendar...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="viewer-error" class="absolute inset-0 flex flex-col items-center justify-center bg-white z-10 hidden px-6 text-center pt-20">
+            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2" id="error-title">PDF Not Found</h2>
+            <p class="text-gray-500 max-w-md" id="error-message">We couldn't find a PDF in the 'calender' folder.</p>
+        </div>
+
+        <!-- PDF Container -->
+        <div id="viewer-content" class="w-full h-full absolute inset-0 pt-[104px]">
+            <!-- iframe will be injected here -->
+        </div>
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('translate-x-full') 
+                    ? '<i class="fa-solid fa-bars"></i>' 
+                    : '<i class="fa-solid fa-xmark text-gray-800"></i>';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const FOLDER_PATH = './calender/';
+            const FALLBACK_FILES = ['calender.pdf', 'calendar.pdf']; // Static fallback for GitHub Pages
+            
+            const viewerLoading = document.getElementById('viewer-loading');
+            const loadingText = document.getElementById('loading-text');
+            const viewerError = document.getElementById('viewer-error');
+            const errorTitle = document.getElementById('error-title');
+            const errorMessage = document.getElementById('error-message');
+            const viewerContent = document.getElementById('viewer-content');
+            
+            const selectorContainer = document.getElementById('file-selector-container');
+            const fileSelector = document.getElementById('file-selector');
+
+            let pdfFiles = [];
+
+            async function fetchCalendarFiles() {
+                try {
+                    const response = await fetch(FOLDER_PATH);
+                    
+                    if (!response.ok) {
+                        throw new Error('Directory fetch failed');
+                    }
+
+                    const text = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const links = doc.querySelectorAll('a');
+
+                    links.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href && href.toLowerCase().endsWith('.pdf')) {
+                            let fileName = decodeURIComponent(href).split('/').pop();
+                            
+                            if (!pdfFiles.includes(fileName)) {
+                                pdfFiles.push(fileName);
+                            }
+                        }
+                    });
+
+                    if (pdfFiles.length === 0) {
+                        pdfFiles = FALLBACK_FILES;
+                    }
+                    handleFilesFound();
+
+                } catch (error) {
+                    console.warn("Directory listing not supported on static host (GitHub Pages). Loading fallback calendar file.");
+                    pdfFiles = FALLBACK_FILES;
+                    handleFilesFound();
+                }
+            }
+
+            function handleFilesFound() {
+                if (pdfFiles.length === 0) {
+                    showError(
+                        "No Calendar Found",
+                        "We checked the '/calender/' folder but couldn't find any PDF files."
+                    );
+                    return;
+                }
+
+                if (pdfFiles.length > 1) {
+                    selectorContainer.classList.remove('hidden');
+                    
+                    pdfFiles.forEach((file) => {
+                        const option = document.createElement('option');
+                        option.value = file;
+                        option.textContent = file.replace(/\.pdf$/i, "").replace(/[-_]/g, ' ');
+                        fileSelector.appendChild(option);
+                    });
+
+                    fileSelector.addEventListener('change', (e) => {
+                        loadPdf(e.target.value);
+                    });
+                }
+
+                loadPdf(pdfFiles[0]);
+            }
+
+            function loadPdf(fileName) {
+                viewerError.classList.add('hidden');
+                viewerContent.innerHTML = '';
+                viewerLoading.classList.remove('hidden');
+                loadingText.innerText = "Loading " + fileName + "...";
+
+                const fullPath = FOLDER_PATH + encodeURIComponent(fileName);
+                
+                const iframe = document.createElement("iframe");
+                iframe.src = fullPath + "#view=FitH&toolbar=1&navpanes=0";
+                iframe.className = "w-full h-full border-0 bg-slate-200/50";
+
+                iframe.onload = () => {
+                    viewerLoading.classList.add('hidden');
+                };
+
+                viewerContent.appendChild(iframe);
+            }
+
+            function showError(title, message) {
+                viewerLoading.classList.add('hidden');
+                viewerContent.innerHTML = '';
+                viewerError.classList.remove('hidden');
+                errorTitle.innerText = title;
+                errorMessage.innerText = message;
+            }
+
+            fetchCalendarFiles();
+        });
+    </script>
+</body>
+</html>

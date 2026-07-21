@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Choir Ministry | Sugam Prathana Bhawan</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#87ceeb',
+                            600: '#38bdf8',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        inter: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        .glass-light {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(125, 211, 252, 0.5);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-in-delayed {
+            animation: fadeIn 1s ease-out 0.3s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loader {
+            border: 4px solid rgba(125, 211, 252, 0.3);
+            border-top: 4px solid #38bdf8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-slate-50 antialiased selection:bg-sky-300 selection:text-sky-950">
+
+    <!-- Header & Navigation Wrapper -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 flex flex-col transition-all duration-300 bg-white shadow-md">
+        <!-- Quick Nav Bar -->
+        <div id="quick-nav" class="bg-primary-900 text-white py-1.5 px-6 md:px-12 flex justify-end gap-6 text-sm border-b border-primary-600/30">
+            <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-book-bible"></i> Bible
+            </a>
+            <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-music"></i> Bhajan
+            </a>
+            <a href="https://sugamca.netlify.app/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-clipboard-check"></i> Attendance
+            </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="navbar" class="w-full py-3 px-6 md:px-12 bg-white">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="flex items-center gap-3 text-gray-800 z-50 group">
+                    <img src="images/logos.webp" alt="Sugam Prathana Bhawan Logo" class="w-10 h-10 rounded-full object-cover shadow-lg" onerror="this.src='https://via.placeholder.com/40'"/>
+                    <span class="font-semibold text-lg md:text-xl tracking-wide text-gray-800">
+                        Sugam Prathana Bhawan
+                    </span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
+                    <a href="index.html" class="hover:text-primary-500 transition">Home</a>
+                    <a href="youthroutine.html" class="hover:text-primary-500 transition">Youth</a>
+                    <a href="choir.html" class="text-primary-500 font-semibold transition">Choir</a>
+                    <a href="calender.html" class="hover:text-primary-500 transition">Calendar</a>
+                    <a href="index.html#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 text-2xl z-50 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
+                <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
+                <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
+                <a href="https://sugamca.netlify.app/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+                <hr class="w-16 border-gray-300 my-2">
+                <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
+                <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
+                <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
+                <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Layer 1: Hero Section -->
+    <header class="relative w-full h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10s] ease-in-out hover:scale-105" 
+             style="background-image: url('images/choir2.webp');">
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-sky-950/70 via-sky-800/60 to-sky-950/90"></div>
+        
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
+            <span class="text-sky-300 font-semibold tracking-widest uppercase mb-4 text-sm md:text-base fade-in">Sugam Prathana Bhawan</span>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-white mb-6 leading-tight fade-in drop-shadow-lg">
+                Church Choir Ministry
+            </h1>
+            <p class="text-lg md:text-2xl text-sky-100 font-light mb-10 fade-in-delayed drop-shadow-md">
+                Serve God through worship, music, and unity.
+            </p>
+            <a href="#resources" class="fade-in-delayed inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-sky-950 bg-sky-400 rounded-full hover:bg-sky-300 hover:-translate-y-1 transition-all duration-300 shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+                Explore Songs
+            </a>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-sky-200/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Layer 2: Choir Songs & Resources -->
+    <section id="resources" class="py-24 bg-sky-50/50">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-sky-950 mb-4">Choir Resources</h2>
+                <div class="w-24 h-1 bg-sky-400 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Main Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left Side: Song List -->
+                <div class="lg:col-span-4 flex flex-col gap-3 sticky top-28">
+                    <div class="glass-light rounded-2xl p-6 shadow-sm border border-sky-100">
+                        <div class="flex justify-between items-center mb-4 px-2">
+                            <h3 class="text-xl font-semibold text-sky-950">Available Files</h3>
+                            <span id="file-count" class="text-xs font-bold bg-sky-100 text-sky-700 px-2 py-1 rounded-full">0</span>
+                        </div>
+                        <div id="resource-list" class="flex flex-col gap-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                            <div class="text-center p-4 text-sky-600/70 text-sm animate-pulse">Scanning static folder...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Viewer -->
+                <div class="lg:col-span-8">
+                    <div class="glass-light rounded-2xl shadow-lg border border-sky-200 overflow-hidden relative min-h-[400px] md:min-h-[600px] flex items-center justify-center bg-white group transition-all duration-300 hover:shadow-xl hover:border-sky-300">
+                        
+                        <!-- Initial Placeholder -->
+                        <div id="viewer-placeholder" class="text-center p-8 text-sky-300">
+                            <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="text-lg text-sky-700">Select a PDF or image from the left.</p>
+                        </div>
+
+                        <!-- Loading Indicator -->
+                        <div id="viewer-loading" class="absolute inset-0 bg-white/90 backdrop-blur-sm z-10 hidden flex-col items-center justify-center">
+                            <div class="loader mb-4"></div>
+                            <p class="text-sky-950 font-medium">Loading resource...</p>
+                        </div>
+
+                        <!-- Content Container -->
+                        <div id="viewer-content" class="w-full h-full absolute inset-0 hidden bg-slate-100"></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-sky-950 border-t border-sky-800 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-center md:text-left">
+                <h4 class="text-white font-serif font-bold text-xl">Sugam Prathana Bhawan</h4>
+                <p class="text-sky-400 text-sm mt-1">Choir Ministry</p>
+            </div>
+            <div class="text-sky-200/50 text-sm">
+                &copy; 2026 All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('translate-x-full') 
+                    ? '<i class="fa-solid fa-bars"></i>' 
+                    : '<i class="fa-solid fa-xmark text-gray-800"></i>';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            let resources = [];
+            let activeItemIndex = null;
+
+            const listContainer = document.getElementById('resource-list');
+            const fileCountBadge = document.getElementById('file-count');
+            const viewerPlaceholder = document.getElementById('viewer-placeholder');
+            const viewerLoading = document.getElementById('viewer-loading');
+            const viewerContent = document.getElementById('viewer-content');
+
+            async function fetchStaticFiles() {
+                try {
+                    const response = await fetch('./static/');
+                    
+                    if (!response.ok) {
+                        throw new Error('Could not fetch directory (Listing might be disabled)');
+                    }
+
+                    const text = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const links = doc.querySelectorAll('a');
+
+                    links.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href && href.match(/\.(pdf|jpe?g|png|webp)$/i)) {
+                            let fileName = decodeURIComponent(href).split('/').pop();
+                            let displayName = fileName.replace(/\.[^/.]+$/, "").replace(/[-_]/g, ' ');
+                            
+                            if (!resources.some(r => r.file === fileName)) {
+                                resources.push({ name: displayName, file: fileName });
+                            }
+                        }
+                    });
+
+                    fileCountBadge.innerText = resources.length;
+
+                    if (resources.length === 0) {
+                        loadFallbackResources();
+                    } else {
+                        renderResources();
+                    }
+
+                } catch (error) {
+                    console.warn("Directory fetch failed. Loading static fallbacks:", error);
+                    loadFallbackResources();
+                }
+            }
+
+            function loadFallbackResources() {
+                const knownFiles = ['song1.pdf', 'song2.pdf'];
+                resources = knownFiles.map(f => ({
+                    name: f.replace(/\.[^/.]+$/, "").replace(/[-_]/g, ' '),
+                    file: f
+                }));
+                fileCountBadge.innerText = resources.length;
+                renderResources();
+            }
+
+            function renderResources() {
+                listContainer.innerHTML = '';
+                
+                resources.forEach((res, index) => {
+                    const btn = document.createElement('button');
+                    
+                    btn.className = `w-full text-left px-4 py-3 rounded-xl transition-all duration-300 border flex items-center justify-between group
+                        ${activeItemIndex === index 
+                            ? 'bg-sky-700 text-white border-sky-700 shadow-md' 
+                            : 'bg-white text-sky-900 border-sky-100 hover:border-sky-400 hover:bg-sky-50'}`;
+                    
+                    const ext = res.file.split('.').pop().toLowerCase();
+                    const isPdf = ext === 'pdf';
+                    
+                    const iconSvg = isPdf 
+                        ? `<svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`
+                        : `<svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`;
+
+                    btn.innerHTML = `
+                        <span class="font-medium truncate capitalize">${res.name}</span>
+                        ${iconSvg}
+                    `;
+                    
+                    btn.addEventListener('click', () => loadResource(index));
+                    
+                    listContainer.appendChild(btn);
+                });
+            }
+
+            function loadResource(index) {
+                activeItemIndex = index;
+                renderResources();
+
+                const resource = resources[index];
+                const file = resource.file;
+                const ext = file.split(".").pop().toLowerCase();
+                const fullPath = "./static/" + encodeURIComponent(file);
+
+                viewerPlaceholder.classList.add("hidden");
+                viewerLoading.classList.remove("hidden");
+                viewerLoading.classList.add("flex");
+                viewerContent.innerHTML = "";
+                viewerContent.classList.add("hidden");
+
+                if (ext === "pdf") {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = fullPath + "#toolbar=1&navpanes=0&scrollbar=1";
+                    iframe.className = "w-full h-full border-0 bg-white";
+
+                    let fallbackTimer = setTimeout(() => {
+                        if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.innerHTML === '') {
+                            viewerContent.innerHTML = `
+                                <div class="flex flex-col items-center justify-center h-full p-10 bg-white text-center">
+                                    <p class="text-sky-800 font-semibold mb-4">Unable to display PDF preview.</p>
+                                    <a href="${fullPath}" target="_blank" class="px-5 py-3 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">Open PDF in new tab</a>
+                                </div>
+                            `;
+                            viewerLoading.classList.add("hidden");
+                            viewerLoading.classList.remove("flex");
+                            viewerContent.classList.remove("hidden");
+                        }
+                    }, 2000);
+
+                    iframe.onload = () => {
+                        clearTimeout(fallbackTimer);
+                        viewerLoading.classList.add("hidden");
+                        viewerLoading.classList.remove("flex");
+                        viewerContent.classList.remove("hidden");
+                    };
+
+                    viewerContent.appendChild(iframe);
+
+                } else {
+                    const img = new Image();
+                    img.src = fullPath;
+                    img.className = "w-full h-full object-contain p-4 bg-white";
+
+                    img.onload = () => {
+                        viewerLoading.classList.add("hidden");
+                        viewerLoading.classList.remove("flex");
+                        viewerContent.classList.remove("hidden");
+                    };
+
+                    img.onerror = () => {
+                        viewerContent.innerHTML = `
+                            <div class="flex flex-col items-center justify-center h-full text-red-500 bg-white">
+                                Image failed to load.
+                            </div>
+                        `;
+                        viewerLoading.classList.add("hidden");
+                        viewerLoading.classList.remove("flex");
+                        viewerContent.classList.remove("hidden");
+                    };
+
+                    viewerContent.appendChild(img);
+                }
+            }
+
+            fetchStaticFiles();
+        });
+    </script>
+</body>
+</html>

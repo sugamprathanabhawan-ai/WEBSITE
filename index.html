@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sugam Prathana Bhawan - A place to worship God, grow in faith, and build a loving Christian community in Nepal.">
+    <title>Sugam Prathana Bhawan | Nepal</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#87ceeb', // Light Sky Blue
+                            600: '#38bdf8', // Slightly deeper for hovers
+                            900: '#0c4a6e', // Dark blue for contrast/text
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Ministry Cards */
+        .ministry-card {
+            @apply p-8 rounded-3xl bg-primary-50 border border-transparent transition-all duration-300 hover:-translate-y-2 hover:bg-white hover:shadow-2xl hover:border-primary-100 flex flex-col items-center text-center cursor-default;
+        }
+        .ministry-card i {
+            @apply text-4xl text-primary-500 mb-6 transition-transform duration-300;
+        }
+        .ministry-card:hover i {
+            @apply scale-125;
+        }
+        .ministry-card h3 {
+            @apply text-xl font-bold text-primary-900 mb-3;
+        }
+        .ministry-card p {
+            @apply text-gray-600 leading-relaxed;
+        }
+
+        /* Scroll Animations */
+        .scroll-anim {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .scroll-anim.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay utilities */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+
+        /* Carousel Styles */
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Smooth Image Hover in Gallery */
+        .gallery-img-wrapper {
+            overflow: hidden;
+            border-radius: 0.75rem;
+            position: relative;
+            cursor: pointer;
+        }
+        .gallery-img-wrapper img {
+            transition: transform 0.5s ease;
+        }
+        .gallery-img-wrapper:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-img-wrapper::after {
+            content: '\f00e';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            inset: 0;
+            background: rgba(135, 206, 235, 0.4); /* Light Sky Blue overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-img-wrapper:hover::after {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f9ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #87ceeb;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-primary-50 antialiased overflow-x-hidden">
+
+    <!-- Header & Navigation Wrapper -->
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 flex flex-col">
+        
+        <!-- Quick Nav Bar (Bible, Bhajan & Attendance) -->
+        <div id="quick-nav" class="bg-primary-900 text-white py-1.5 px-6 md:px-12 flex justify-end gap-6 text-sm border-b border-primary-600/30">
+            <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-book-bible"></i> Bible
+            </a>
+            <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-music"></i> Bhajan
+            </a>
+            <a href="choirattendance.html" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+                <i class="fa-solid fa-clipboard-check"></i> Attendance
+            </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav id="navbar" class="w-full transition-all duration-300 py-4 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 text-white z-50 group">
+                    <img src="images/logos.webp" alt="Sugam Prathana Bhawan Logo" class="w-10 h-10 rounded-full object-cover shadow-lg" onerror="this.src='https://via.placeholder.com/40'"/>
+                    <span class="font-semibold text-lg md:text-xl tracking-wide nav-text transition-colors duration-300">
+                        Sugam Prathana Bhawan
+                    </span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 text-white nav-links transition-colors duration-300 font-medium">
+                    <a href="index.html" class="hover:text-primary-500 transition">Home</a>
+                    <a href="youthroutine.html" class="hover:text-primary-500 transition">Youth</a>
+                    <a href="choir.html" class="hover:text-primary-500 transition">Choir</a>
+                    <a href="calender.html" class="hover:text-primary-500 transition">Calendar</a>
+                    <a href="/laws.html" class="hover:text-primary-500 transition">Laws</a>
+                    <a href="#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
+                    
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-white nav-text text-2xl z-50 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
+                <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
+                <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
+                <a href="https://sugamca.netlify.app/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+                <hr class="w-16 border-gray-300 my-2">
+                <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
+                <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
+                <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
+                <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/bg.webp');"></div>        
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-primary-900/90"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in-up">
+            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-white font-bold mb-6 drop-shadow-lg leading-tight">
+                Welcome to <br><span class="text-primary-500">Sugam Prathana Bhawan</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 font-light drop-shadow">
+                A place to worship God, grow in faith, and build a loving Christian community.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="calender.html" class="px-8 py-3 bg-primary-500 text-white rounded-full font-medium hover:bg-primary-600 transition shadow-[0_0_20px_rgba(135,206,235,0.4)]">Join Worship</a>
+                <a href="#contact" class="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-full font-medium hover:bg-white/20 transition">Contact Us</a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <a href="#slider" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 hover:text-white animate-bounce transition">
+            <i class="fa-solid fa-chevron-down text-2xl"></i>
+        </a>
+    </section>
+
+    <!-- Image Slider / Carousel Section -->
+    <section id="slider" class="relative bg-primary-900 h-[60vh] md:h-[80vh] overflow-hidden group">
+        <div id="carousel-inner" class="relative w-full h-full"></div>
+        <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer opacity-0 group-hover:opacity-100">
+            &#10094;
+        </button>
+        <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer opacity-0 group-hover:opacity-100">
+            &#10095;
+        </button>
+        <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+    </section>
+
+    <!-- Bible Verse Parallax -->
+    <section class="py-24 relative bg-fixed bg-center bg-cover flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80');">
+        <div class="absolute inset-0 bg-primary-900/80 backdrop-blur-sm"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto text-white scroll-anim">
+            <i class="fa-solid fa-quote-left text-4xl md:text-6xl text-primary-500/50 mb-6"></i>
+            <h2 class="text-2xl md:text-4xl font-serif leading-relaxed mb-6">
+                आफ्‍ना सारा मार्गमा उहाँलाई सम्‍झी, र उहाँले तेरा मार्गहरू सुगम तुल्‍याइदिनुहुनेछ।
+            </h2>
+            <p class="text-xl text-primary-500 font-medium">- हितोपदेश ३ : ६ (Proverbs 3:6)</p>
+        </div>
+    </section>
+
+    <!-- Ministries Section -->
+    <section id="ministries" class="py-24 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-anim">
+                <span class="text-primary-500 font-semibold tracking-wider uppercase text-sm">Get Involved</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-primary-900 mt-2">Our Ministries</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="ministry-card scroll-anim">
+                    <i class="fa-solid fa-music"></i>
+                    <h3>Worship Ministry</h3>
+                    <p>Leading the congregation into the presence of God through spirit-filled praise and worship.</p>
+                </div>
+                <div id="youth" class="ministry-card scroll-anim delay-100">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>Youth Fellowship</h3>
+                    <p>Empowering the next generation to stand firm in their faith and impact the world.</p>
+                </div>
+                <div id="choir" class="ministry-card scroll-anim delay-200">
+                    <i class="fa-solid fa-microphone"></i>
+                    <h3>Choir Ministry</h3>
+                    <p>Glorifying God through harmonious voices and beautiful musical arrangements.</p>
+                </div>
+                <div class="ministry-card scroll-anim">
+                    <i class="fa-solid fa-child"></i>
+                    <h3>Children’s Ministry</h3>
+                    <p>Building a strong biblical foundation for kids in a fun, safe, and loving environment.</p>
+                </div>
+                <div class="ministry-card scroll-anim delay-100">
+                    <i class="fa-solid fa-hands-praying"></i>
+                    <h3>Prayer Ministry</h3>
+                    <p>Standing in the gap for our church, community, and nation through dedicated intercession.</p>
+                </div>
+                <div class="ministry-card scroll-anim delay-200">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <h3>Evangelism Ministry</h3>
+                    <p>Taking the Good News of Jesus Christ to the unreached areas of Nepal and beyond.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-primary-500 text-white px-6">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-12 md:gap-24 text-center" id="stats-container">
+            <div class="scroll-anim">
+                <div class="text-4xl md:text-5xl font-bold font-serif mb-2"><span class="counter" data-target="9">0</span>+</div>
+                <div class="text-white/80 font-medium">Years Serving</div>
+            </div>
+            
+            <div class="scroll-anim delay-100">
+                <div class="text-4xl md:text-5xl font-bold font-serif mb-2"><span class="counter" data-target="120">0</span>+</div>
+                <div class="text-white/80 font-medium">Members</div>
+            </div>
+            
+            <div class="scroll-anim delay-300">
+                <div class="text-4xl md:text-5xl font-bold font-serif mb-2"><span class="counter" data-target="30">0</span>+</div>
+                <div class="text-white/80 font-medium">Youth Members</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section id="leadership" class="py-24 bg-white px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="text-primary-500 font-semibold tracking-wider uppercase text-sm">Our Team</span>
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-primary-900 mt-2 mb-16 scroll-anim">Church Leadership</h2>
+            <div id="leadership-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-primary-900 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="text-primary-500 font-semibold tracking-wider uppercase text-sm">Moments</span>
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mt-2 mb-16 scroll-anim">Church Gallery</h2>
+            <div id="gallery-grid" class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4"></div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex justify-center items-center opacity-0 transition-opacity duration-300">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl hover:text-primary-500">&times;</button>
+        <img id="lightbox-img" src="" alt="Gallery Image" class="max-w-[90%] max-h-[90vh] rounded-lg shadow-2xl">
+    </div>
+
+    <!-- Contact & Footer Section -->
+    <footer id="contact" class="bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12">
+            <!-- Contact Info -->
+            <div class="scroll-anim">
+                <h2 class="text-3xl font-serif font-bold text-primary-900 mb-8">Get In Touch</h2>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-primary-50 rounded-full flex items-center justify-center text-primary-500 shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Location</h4>
+                            <p class="text-gray-600">Kathmandu, Nepal</p>
+                            <a href="https://maps.app.goo.gl/eWkhT7WZdFveRtus7" target="_blank" class="text-primary-500 hover:underline text-sm">Get Directions</a>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-primary-50 rounded-full flex items-center justify-center text-primary-500 shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Email Us</h4>
+                            <a href="mailto:sugamprathanabhawan@gmail.com" class="text-gray-600 hover:text-primary-500">sugamprathanabhawan@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 pt-4">
+                        <a href="https://www.facebook.com/share/19AMMJ1ini/?mibextid=wwXIfr" target="_blank" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:-translate-y-1 transition shadow-lg"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://youtube.com/@sugamchurchmedia?si=JCEBJlGDN92HzGJJ" target="_blank" class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:-translate-y-1 transition shadow-lg"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map -->
+            <div class="w-full h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 scroll-anim delay-200">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.9589780403658!2d85.34025037492258!3d27.693976426082124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19005e2445d7%3A0xc9e961baf713c0ac!2sSugam%20Church!5e1!3m2!1sen!2snp!4v1784608050001!5m2!1sen!2snp"
+                    class="w-full h-full border-0"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="bg-primary-900 border-t border-white/10 py-6">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p class="text-sm text-gray-400">
+                    &copy; <span id="year"></span> Sugam Prathana Bhawan. All rights reserved.
+                </p>
+                <p class="mt-2 text-xs text-gray-500">
+                    Made with <i class="fa-solid fa-heart text-red-500"></i> for the glory of God.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Set Current Year ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- 2. Navbar Scroll Effect & Mobile Menu ---
+            const navbar = document.getElementById('navbar');
+            const navTextElements = document.querySelectorAll('.nav-text, .nav-links');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-white', 'shadow-md');
+                    navbar.classList.remove('py-4');
+                    navbar.classList.add('py-2');
+                    navTextElements.forEach(el => el.classList.remove('text-white'));
+                    navTextElements.forEach(el => el.classList.add('text-gray-800'));
+                } else {
+                    navbar.classList.remove('bg-white', 'shadow-md');
+                    navbar.classList.remove('py-2');
+                    navbar.classList.add('py-4');
+                    navTextElements.forEach(el => el.classList.add('text-white'));
+                    navTextElements.forEach(el => el.classList.remove('text-gray-800'));
+                }
+            });
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('translate-x-full') 
+                    ? '<i class="fa-solid fa-bars"></i>' 
+                    : '<i class="fa-solid fa-xmark text-gray-800"></i>';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                });
+            });
+
+            // --- 3. Scroll Animations ---
+            const scrollElements = document.querySelectorAll('.scroll-anim');
+            const elementObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        elementObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            scrollElements.forEach(el => elementObserver.observe(el));
+
+            // --- 4. Number Counters Animation ---
+            const counters = document.querySelectorAll('.counter');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = +entry.target.getAttribute('data-target');
+                        const duration = 2000; 
+                        const step = target / (duration / 16); 
+                        let current = 0;
+
+                        const updateCounter = () => {
+                            current += step;
+                            if (current < target) {
+                                entry.target.innerText = Math.ceil(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                entry.target.innerText = target;
+                            }
+                        };
+                        updateCounter();
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => counterObserver.observe(counter));
+
+            // --- 5. Image Carousel (Hero) ---
+            const carouselData = [
+                { image: "images/start.webp", text: "Welcome to Our Sunday Service" },
+                { image: "images/com.webp", text: "Community Outreach Programs" },
+                { image: "images/js3.webp", text: "Join Our Youth Ministry" },
+                { image: "images/js2.webp", text: "Join Our Youth Ministry" },
+                { image: "images/js.webp", text: "Join Our Youth Ministry" },
+                { image: "images/gs.webp", text: "Join Our House Ministry" },
+                { image: "images/bs.webp", text: "Join Our Child Ministry" },
+                { image: "images/bs2.webp", text: "Join Our Child Ministry" },
+                { image: "images/bs4.webp", text: "Join Our Child Ministry" },
+                { image: "images/ama4.webp", text: "" },
+                { image: "images/ama.webp", text: "" },
+                { image: "images/carol1.webp", text: "Carol" },
+                { image: "images/carol2.webp", text: "Carol" },
+                { image: "images/choir1.webp", text: "Choir" },
+                { image: "images/choir2.webp", text: "Choir" },
+            ];
+
+            const carouselInner = document.getElementById("carousel-inner");
+            const dotsContainer = document.getElementById("carousel-dots");
+            const prevBtn = document.getElementById("prev-btn");
+            const nextBtn = document.getElementById("next-btn");
+
+            let currentIndex = 0;
+            let autoSlideInterval;
+
+            carouselData.forEach((item, index) => {
+                const slide = document.createElement("div");
+                slide.className = `carousel-slide relative w-full h-full ${index === 0 ? "active" : "hidden"}`; 
+                
+                slide.innerHTML = `
+                    <img src="${item.image}" alt="Carousel Image ${index + 1}" class="w-full h-full object-contain" loading="lazy">
+                    <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+                        <h3 class="text-white text-2xl md:text-4xl font-bold text-center px-4 drop-shadow-md">
+                            ${item.text}
+                        </h3>
+                    </div>
+                `;
+
+                carouselInner.appendChild(slide);
+
+                const dot = document.createElement("button");
+                dot.className = `carousel-dot w-3 h-3 rounded-full transition-all ${
+                    index === 0 ? "bg-primary-500 w-8" : "bg-white/50"
+                }`;
+
+                dot.addEventListener("click", () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            const slides = document.querySelectorAll(".carousel-slide");
+            const dots = document.querySelectorAll(".carousel-dot");
+
+            function goToSlide(index) {
+                slides[currentIndex].classList.remove("active", "block");
+                slides[currentIndex].classList.add("hidden"); 
+                dots[currentIndex].classList.remove("bg-primary-500", "w-8");
+                dots[currentIndex].classList.add("bg-white/50");
+
+                currentIndex = index;
+
+                slides[currentIndex].classList.remove("hidden");
+                slides[currentIndex].classList.add("active", "block");
+                dots[currentIndex].classList.remove("bg-white/50");
+                dots[currentIndex].classList.add("bg-primary-500", "w-8");
+
+                resetAutoSlide();
+            }
+
+            function nextSlide() {
+                const nextIndex = (currentIndex + 1) % carouselData.length;
+                goToSlide(nextIndex);
+            }
+
+            function prevSlide() {
+                const prevIndex = (currentIndex - 1 + carouselData.length) % carouselData.length;
+                goToSlide(prevIndex);
+            }
+
+            nextBtn.addEventListener("click", nextSlide);
+            prevBtn.addEventListener("click", prevSlide);
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(nextSlide, 2500);
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            carouselInner.addEventListener("mouseenter", () => clearInterval(autoSlideInterval));
+            carouselInner.addEventListener("mouseleave", startAutoSlide);
+            startAutoSlide();
+
+            // --- 6. Leadership Generation ---
+            const leadershipGrid = document.getElementById('leadership-grid');
+
+            const leadersData = [
+                { name: "किरण थापा", role: "पास्टर", image: "images/ag1.webp" },
+                { name: "दीपक थापा", role: "सह पास्टर", image: "images/ag2.webp" },
+                { name: "नरेश राई", role: "एल्डर", image: "images/ag3.webp" },
+                { name: "खड्क चौधरी", role: "डिकन", image: "images/ag4.webp" },
+                { name: "बिलास पोख्रेल", role: "डिकन", image: "images/ag5.webp" },
+                { name: "नरेन राई", role: "डिकन", image: "images/ag6.webp" },
+                { name: "मान बहादुर श्रेष्ठ", role: "डिकन", image: "images/ag7.webp" },
+                { name: "स्टीफन तामाङ", role: "डिकन", image: "images/ag8.webp" },
+                { name: "आर्यन राई", role: "आराधक", image: "images/aryan.webp" },
+                { name: "ममता राई", role: "आराधक", image: "images/mamata.webp" },
+                { name: "सृष्टि खड्का", role: "आराधक", image: "images/srishti.webp" }
+            ];
+
+            leadershipGrid.innerHTML = '';
+
+            leadersData.forEach((leader, index) => {
+                leadershipGrid.innerHTML += `
+                    <div class="scroll-anim ${index % 2 !== 0 ? 'delay-100' : ''} text-center group">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 border-4 border-primary-50 group-hover:border-primary-500 transition-colors duration-300">
+                            <img src="${leader.image}" alt="${leader.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg">${leader.name}</h4>
+                        <p class="text-primary-500 text-sm font-medium">${leader.role}</p>
+                    </div>
+                `;
+            });
+
+            // --- 7. Gallery Generation ---
+            const galleryGrid = document.getElementById('gallery-grid');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            const openLightbox = (url) => {
+                lightboxImg.src = url;
+                lightbox.classList.remove('hidden');
+                setTimeout(() => lightbox.classList.remove('opacity-0'), 10);
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.add('opacity-0');
+                setTimeout(() => lightbox.classList.add('hidden'), 300); 
+            };
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if(e.target === lightbox) closeLightbox();
+            });
+
+            const addGalleryImage = (imgUrl, altText) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'gallery-img-wrapper break-inside-avoid scroll-anim';
+                wrapper.innerHTML = `<img src="${imgUrl}" alt="${altText}" class="w-full rounded-lg" loading="lazy">`;
+                wrapper.addEventListener('click', () => openLightbox(imgUrl));
+                galleryGrid.appendChild(wrapper);
+            };
+
+            addGalleryImage('images/img1.webp', 'Church Gallery Image 1');
+            addGalleryImage('images/img2.webp', 'Church Gallery Image 2');
+            addGalleryImage('images/img3.webp', 'Church Gallery Image 3');
+            addGalleryImage('images/img4.webp', 'Church Gallery Image 4');
+            addGalleryImage('images/img5.webp', 'Church Gallery Image 5');
+            addGalleryImage('images/img6.webp', 'Church Gallery Image 6');
+            addGalleryImage('images/img7.webp', 'Church Gallery Image 7');
+            addGalleryImage('images/img8.webp', 'Church Gallery Image 8');
+            addGalleryImage('images/img9.webp', 'Church Gallery Image 9');
+            addGalleryImage('images/img10.webp', 'Church Gallery Image 10');
+            addGalleryImage('images/img11.webp', 'Church Gallery Image 11');
+
+            document.querySelectorAll('#leadership-grid .scroll-anim, #gallery-grid .scroll-anim').forEach(el => {
+                elementObserver.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

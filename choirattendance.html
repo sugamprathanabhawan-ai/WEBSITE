@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sugam Choir Attendance & Standings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      color: #000000;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .status-btn {
+      border: 2px solid #e2e8f0;
+      color: #000000;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .status-btn.active-present {
+      background-color: #000000;
+      color: #ffffff;
+      border-color: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+    }
+    .status-btn.active-absent {
+      background-color: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3);
+    }
+    .animate-pulse-soft {
+      animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    input::placeholder, textarea::placeholder {
+      color: #94a3b8;
+    }
+    .input-focus:focus {
+      border-color: #000000;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+    }
+    .fine-row {
+      background-color: #fff1f2 !important;
+    }
+    .fine-badge {
+      background-color: #be123c;
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 900;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 6px -1px rgba(190, 18, 60, 0.4);
+      animation: pulse-red 2s infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f1f5f9] pt-28 pb-12 px-4 sm:px-8">
+
+  <!-- Navigation Bar -->
+  <nav class="fixed top-4 inset-x-4 sm:inset-x-8 max-w-5xl mx-auto z-50 glass rounded-[2rem] px-6 py-4 flex justify-between items-center shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)]">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white text-xl shadow-md">
+        🎤
+      </div>
+      <span class="font-extrabold text-xl tracking-tight">Sugam<span class="text-blue-600">Choir</span></span>
+    </div>
+
+    <!-- Desktop Nav Links -->
+    <div class="hidden md:flex items-center gap-8 font-bold text-sm text-slate-500">
+      <a href="#" class="text-black transition-colors hover:text-blue-600 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-black">Terminal</a>
+      <a href="/index.html" class="transition-colors hover:text-blue-600">Home</a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-black p-2 bg-slate-100 rounded-full hover:bg-slate-200 active:scale-90 transition-all">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+  </nav>
+
+  <div class="max-w-4xl mx-auto space-y-12">
+    <!-- Main Terminal Card -->
+    <div class="glass rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.12)] p-8 sm:p-12 overflow-hidden relative border border-white">
+      <div class="absolute -top-24 -left-24 w-64 h-64 bg-blue-100 rounded-full blur-[100px] opacity-40"></div>
+      
+      <!-- Header -->
+      <div class="text-center mb-12 relative">
+        <h1 class="text-5xl font-extrabold text-black tracking-tighter leading-none mb-2">
+          Sugam <span class="text-blue-600">Choir</span>
+        </h1>
+        <p class="text-black font-black mt-3 tracking-[0.2em] uppercase text-[10px] opacity-60">Digital Attendance Terminal</p>
+        
+        <div class="mt-10 relative inline-block group">
+          <div class="absolute inset-0 bg-black/10 blur-2xl rounded-3xl scale-110 animate-pulse-soft"></div>
+          <div id="clock" class="relative bg-black text-white font-black text-4xl sm:text-5xl py-5 px-10 rounded-[2rem] shadow-2xl tracking-tighter tabular-nums border border-white/10">
+            --:--:-- NPT
+          </div>
+        </div>
+      </div>
+
+      <!-- Attendance Form -->
+      <form id="attendanceForm" class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+        <div class="space-y-6">
+          <div class="group">
+            <label for="symbolNo" class="block text-xs font-black text-black uppercase tracking-widest mb-3 ml-2 opacity-70">Symbol Number</label>
+            <input 
+              type="text" 
+              id="symbolNo" 
+              placeholder="Enter your unique ID"
+              class="w-full px-7 py-5 bg-white border-2 border-slate-100 rounded-[1.5rem] input-focus outline-none transition-all text-xl font-bold text-black shadow-sm"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-black uppercase tracking-widest mb-3 ml-2 opacity-70">Identified Member</label>
+            <input 
+              type="text" 
+              id="memberName" 
+              placeholder="Awaiting valid symbol..."
+              class="w-full px-7 py-5 bg-slate-50 border-2 border-transparent rounded-[1.5rem] text-black font-black cursor-not-allowed text-lg"
+              readonly
+            />
+          </div>
+
+          <div id="personalStats" class="hidden animate-in fade-in duration-500 p-6 bg-slate-900 rounded-[1.5rem] border border-black shadow-lg">
+             <div class="flex justify-between items-center">
+               <span class="text-[10px] font-black text-white/60 uppercase tracking-widest">Aggregate Points</span>
+               <span id="userTotalPoints" class="text-3xl font-black text-white">0</span>
+             </div>
+             <div class="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
+               <span class="text-[10px] font-black text-white/60 uppercase tracking-widest">Standing Status</span>
+               <span id="userResult" class="text-sm font-black uppercase tracking-widest text-white">Clear</span>
+             </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs font-black text-black uppercase tracking-widest mb-4 ml-2 opacity-70">Practice Presence</label>
+            <div class="flex flex-col gap-4">
+              <button 
+                type="button" 
+                id="btnPresent" 
+                class="status-btn active-present group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="text-2xl">🎤</span>
+                  <span>Present in choir practice</span>
+                </div>
+                <div class="w-3 h-3 rounded-full bg-white"></div>
+              </button>
+              <button 
+                type="button" 
+                id="btnAbsent" 
+                class="status-btn group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base bg-white"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="text-2xl">🏠</span>
+                  <span>Absent in choir practice</span>
+                </div>
+                <div class="w-3 h-3 rounded-full bg-slate-200"></div>
+              </button>
+            </div>
+          </div>
+
+          <div id="reasonContainer" class="hidden animate-in fade-in slide-in-from-top-4 duration-500">
+            <label for="reason" class="block text-xs font-black text-black uppercase tracking-widest mb-3 ml-2 opacity-70">Absence Reason</label>
+            <textarea 
+              id="reason" 
+              rows="3"
+              placeholder="Why are you missing practice today?"
+              class="w-full px-7 py-5 bg-white border-2 border-slate-100 rounded-[1.5rem] input-focus outline-none transition-all text-black font-bold resize-none shadow-sm"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            id="submitBtn"
+            disabled
+            class="w-full bg-black hover:bg-zinc-900 text-white py-6 rounded-[2rem] text-xl font-black shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] transition-all transform hover:-translate-y-1 active:scale-[0.98] disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed"
+          >
+            Confirm & Log Attendance
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Standings Result Place -->
+    <div id="standings" class="glass rounded-[3rem] shadow-2xl p-8 sm:p-12 border border-white relative scroll-mt-32">
+      <div class="flex items-center justify-between mb-10">
+        <div>
+          <h2 class="text-4xl font-black text-black tracking-tight">Choir Standings</h2>
+          <p class="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mt-1">Live Aggregated Performance & Results</p>
+        </div>
+        <button id="refreshBtn" class="p-4 bg-black text-white hover:bg-zinc-800 rounded-2xl transition-all shadow-lg active:scale-90">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto rounded-[2rem]">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-black/5 text-[10px] font-black uppercase tracking-widest">
+              <th class="py-5 px-6 rounded-tl-[1.5rem]">Member Name</th>
+              <th class="py-5 px-6 text-center">Points</th>
+              <th class="py-5 px-6 text-right rounded-tr-[1.5rem]">Result</th>
+            </tr>
+          </thead>
+          <tbody id="standingsBody" class="bg-white/50">
+            <!-- Dynamically populated -->
+            <tr><td colspan="3" class="py-16 text-center text-slate-400 font-bold italic">Initializing data synchronizer...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast" class="fixed inset-x-8 bottom-10 hidden z-50 animate-in slide-in-from-bottom-10">
+    <div id="toastContent" class="p-6 rounded-[2rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] text-center font-black text-lg border-2"></div>
+  </div>
+
+  <!-- REQUIRED CLOCK SCRIPT -->
+  <script>
+    let utcTimestamp = 0;
+    const NEPAL_OFFSET_MS = (5 * 60 + 45) * 60 * 1000;
+
+    async function fetchServerTime() {
+      try {
+        const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
+        const text = await res.text();
+        const match = text.match(/ts=(\d+)/);
+        utcTimestamp = parseInt(match[1]) * 1000;
+        startClock();
+      } catch {
+        setInterval(() => {
+          let substime = new Date().toLocaleTimeString("en-GB", {
+            timeZone: "Asia/Kathmandu"
+          });
+          document.getElementById("clock").innerText = substime;
+        }, 1000);
+      }
+    }
+
+    function startClock() {
+      setInterval(() => {
+        utcTimestamp += 1000;
+        const nepalTime = new Date(utcTimestamp + NEPAL_OFFSET_MS);
+        const h = String(nepalTime.getUTCHours()).padStart(2, "0");
+        const m = String(nepalTime.getUTCMinutes()).padStart(2, "0");
+        const s = String(nepalTime.getUTCSeconds()).padStart(2, "0");
+        document.getElementById("clock").innerText = `${h}:${m}:${s} NPT`;
+      }, 1000);
+    }
+
+    fetchServerTime();
+  </script>
+
+  <!-- FORM & STANDINGS LOGIC -->
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx83lIkITELZlHPemIekqv6lHJmeAr9HAv3wl5CUYz49pEADu9GtJYpLllpi6xOrPSBDg/exec";
+    
+    const MEMBERS = [
+      { symbolNo: '12345', name: 'dummy' },
+      { symbolNo: '27409', name: 'Ishika' },
+      { symbolNo: '58123', name: 'Srishti' },
+      { symbolNo: '83941', name: 'Sikhum' },
+      { symbolNo: '12056', name: 'Puja Rai' },
+      { symbolNo: '69718', name: 'Ruben' },
+      { symbolNo: '40682', name: 'Suraj' },
+      { symbolNo: '91362', name: 'Sara' },
+      { symbolNo: '10457', name: 'Puja Majhi' },
+      { symbolNo: '46280', name: 'Sanjita' },
+      { symbolNo: '72534', name: 'Mamata' },
+      { symbolNo: '35891', name: 'Urmila' },
+      { symbolNo: '59063', name: 'Onis' },
+      { symbolNo: '33547', name: 'Bachan' },
+      { symbolNo: '77677', name: 'Janvi' }
+    ];
+
+    let aggregatedData = {};
+    let selectedStatus = 'Present in choir practice';
+    
+    const form = document.getElementById('attendanceForm');
+    const symbolInput = document.getElementById('symbolNo');
+    const nameInput = document.getElementById('memberName');
+    const btnPresent = document.getElementById('btnPresent');
+    const btnAbsent = document.getElementById('btnAbsent');
+    const reasonContainer = document.getElementById('reasonContainer');
+    const reasonInput = document.getElementById('reason');
+    const submitBtn = document.getElementById('submitBtn');
+    const standingsBody = document.getElementById('standingsBody');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    async function fetchStandings() {
+      try {
+        const response = await fetch(APPS_SCRIPT_URL);
+        const data = await response.json();
+        aggregatedData = data;
+        renderStandings();
+        updatePersonalStats();
+      } catch (err) {
+        console.error("Failed to fetch standings:", err);
+      }
+    }
+
+    function renderStandings() {
+      standingsBody.innerHTML = '';
+      MEMBERS.forEach(m => {
+        const points = aggregatedData[m.symbolNo] || 0;
+        const isFine = points >= 10;
+        const row = document.createElement('tr');
+        row.className = `border-b border-black/5 transition-all ${isFine ? 'fine-row' : 'hover:bg-slate-50'}`;
+        row.innerHTML = `
+          <td class="py-5 px-6 font-bold text-black">${m.name}</td>
+          <td class="py-5 px-6 text-center font-black text-lg">${points}</td>
+          <td class="py-5 px-6 text-right">
+            ${isFine ? '<span class="fine-badge">FINE</span>' : '<span class="text-[10px] font-black text-green-600 uppercase tracking-widest bg-green-50 px-3 py-1 rounded-full border border-green-200">Clear</span>'}
+          </td>
+        `;
+        standingsBody.appendChild(row);
+      });
+    }
+
+    function updatePersonalStats() {
+      const val = symbolInput.value.trim();
+      if (aggregatedData[val] !== undefined || val === '') {
+        const points = aggregatedData[val] || 0;
+        document.getElementById('userTotalPoints').innerText = points;
+        const resultEl = document.getElementById('userResult');
+        if (points >= 10) {
+          resultEl.innerText = 'FINE';
+          resultEl.className = 'text-sm font-black uppercase tracking-widest text-red-500';
+        } else {
+          resultEl.innerText = 'Clear';
+          resultEl.className = 'text-sm font-black uppercase tracking-widest text-green-400';
+        }
+      }
+    }
+
+    symbolInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      const member = MEMBERS.find(m => m.symbolNo === val);
+      if (member) {
+        nameInput.value = member.name;
+        submitBtn.disabled = false;
+        document.getElementById('personalStats').classList.remove('hidden');
+        updatePersonalStats();
+      } else {
+        nameInput.value = "";
+        submitBtn.disabled = true;
+        document.getElementById('personalStats').classList.add('hidden');
+      }
+    });
+
+    btnPresent.addEventListener('click', () => {
+      selectedStatus = 'Present in choir practice';
+      btnPresent.className = "status-btn active-present group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base";
+      btnAbsent.className = "status-btn group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base bg-white";
+      btnAbsent.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-slate-200";
+      reasonContainer.classList.add('hidden');
+      reasonInput.required = false;
+    });
+
+    btnAbsent.addEventListener('click', () => {
+      selectedStatus = 'Absent in choir practice';
+      btnAbsent.className = "status-btn active-absent group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base";
+      btnPresent.className = "status-btn group flex items-center justify-between px-8 py-5 rounded-[1.5rem] font-black text-base bg-white";
+      btnPresent.querySelector('.w-3').className = "w-3 h-3 rounded-full bg-slate-200";
+      reasonContainer.classList.remove('hidden');
+      reasonInput.required = true;
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nepalTime = new Date(utcTimestamp + NEPAL_OFFSET_MS);
+      const h = nepalTime.getUTCHours();
+      const m = nepalTime.getUTCMinutes();
+      const timeStr = document.getElementById('clock').innerText.replace(' NPT', '');
+      const nepalDate = nepalTime.toISOString().split('T')[0]; 
+      let time = new Date().toLocaleTimeString("en-GB");
+
+      let points = 0;
+      if (selectedStatus === 'Present in choir practice') {
+        if (h > 9 || (h === 9 && m >= 51)) points = 1;
+      }
+
+      const payload = {
+        symbolNo: symbolInput.value.trim(),
+        name: nameInput.value,
+        arrivalTime: time,
+        formFillTime:  nepalDate +", " + timeStr ,
+        status: selectedStatus,
+        reason: selectedStatus === 'Absent in choir practice' ? reasonInput.value.trim() : "",
+        points: points
+      };
+
+      submitBtn.innerText = "Transmitting...";
+      submitBtn.disabled = true;
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        showToast("✓ Attendance Logged Successfully!", "success");
+        form.reset();
+        nameInput.value = "";
+        btnPresent.click();
+        submitBtn.disabled = true;
+        document.getElementById('personalStats').classList.add('hidden');
+        
+        setTimeout(fetchStandings, 1500);
+      } catch (err) {
+        showToast("⚠ Data Transmission Failure.", "error");
+      } finally {
+        submitBtn.innerText = "Confirm & Log Attendance";
+      }
+    });
+
+    refreshBtn.addEventListener('click', () => {
+      const icon = refreshBtn.querySelector('svg');
+      icon.classList.add('animate-spin');
+      fetchStandings().finally(() => {
+        setTimeout(() => icon.classList.remove('animate-spin'), 600);
+      });
+    });
+
+    function showToast(msg, type) {
+      const toast = document.getElementById('toast');
+      const content = document.getElementById('toastContent');
+      content.innerText = msg;
+      content.className = `p-6 rounded-[2rem] shadow-2xl text-center font-black text-lg border-2 ${type === 'success' ? 'bg-black text-white border-white/20' : 'bg-red-600 text-white border-red-400'}`;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 4000);
+    }
+
+    fetchStandings();
+  </script>
+</body>
+</html>
