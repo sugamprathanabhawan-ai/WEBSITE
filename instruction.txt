@@ -1,0 +1,1 @@
+For future PDFs: upload the PDF into its matching folder and add its exact filename to that folder’s pdf-manifest.json. This is necessary on most static hosts, which do not allow a website to automatically inspect folder contents.

@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sugam Choir Attendance & Standings</title>
+  <meta name="description" content="Secure choir attendance and standings for members of Sugam Prathana Bhawan (Sugam Church) in Nepal.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Sugam Choir Attendance | Sugam Prathana Bhawan</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -85,13 +87,19 @@
     <!-- Desktop Nav Links -->
     <div class="hidden md:flex items-center gap-8 font-bold text-sm text-slate-500">
       <a href="#" class="text-black transition-colors hover:text-blue-600 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-black">Terminal</a>
-      <a href="/index.html" class="transition-colors hover:text-blue-600">Home</a>
+      <a href="index.html" class="transition-colors hover:text-blue-600">Home</a>
+      <a href="laws.html" class="transition-colors hover:text-blue-600">Laws</a>
     </div>
 
     <!-- Mobile Menu Button -->
-    <button class="md:hidden text-black p-2 bg-slate-100 rounded-full hover:bg-slate-200 active:scale-90 transition-all">
+    <button id="attendance-menu-btn" type="button" aria-controls="attendance-menu" aria-expanded="false" class="md:hidden text-black p-2 bg-slate-100 rounded-full hover:bg-slate-200 active:scale-90 transition-all">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
     </button>
+    <div id="attendance-menu" class="hidden md:hidden absolute top-full right-0 mt-3 w-48 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
+      <a href="#" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100">Terminal</a>
+      <a href="index.html" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100">Home</a>
+      <a href="laws.html" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100">Laws</a>
+    </div>
   </nav>
 
   <div class="max-w-4xl mx-auto space-y-12">
@@ -239,6 +247,15 @@
 
   <!-- REQUIRED CLOCK SCRIPT -->
   <script>
+    const attendanceMenuButton = document.getElementById('attendance-menu-btn');
+    const attendanceMenu = document.getElementById('attendance-menu');
+    attendanceMenuButton.addEventListener('click', () => {
+      const isOpen = !attendanceMenu.classList.toggle('hidden');
+      attendanceMenuButton.setAttribute('aria-expanded', String(isOpen));
+    });
+  </script>
+
+  <script>
     let utcTimestamp = 0;
     const NEPAL_OFFSET_MS = (5 * 60 + 45) * 60 * 1000;
 
@@ -250,12 +267,8 @@
         utcTimestamp = parseInt(match[1]) * 1000;
         startClock();
       } catch {
-        setInterval(() => {
-          let substime = new Date().toLocaleTimeString("en-GB", {
-            timeZone: "Asia/Kathmandu"
-          });
-          document.getElementById("clock").innerText = substime;
-        }, 1000);
+        utcTimestamp = Date.now();
+        startClock();
       }
     }
 
@@ -395,7 +408,7 @@
       const m = nepalTime.getUTCMinutes();
       const timeStr = document.getElementById('clock').innerText.replace(' NPT', '');
       const nepalDate = nepalTime.toISOString().split('T')[0]; 
-      let time = new Date().toLocaleTimeString("en-GB");
+      let time = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Kathmandu" });
 
       let points = 0;
       if (selectedStatus === 'Present in choir practice') {

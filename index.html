@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sugam Prathana Bhawan - A place to worship God, grow in faith, and build a loving Christian community in Nepal.">
-    <title>Sugam Prathana Bhawan | Nepal</title>
+    <meta name="description" content="Sugam Prathana Bhawan (Sugam Church) is a Christian church in Nepal: worship, prayer, choir, youth fellowship, community, and biblical teaching.">
+    <meta name="keywords" content="Sugam Church, Sugam Prathana Bhawan, church in Nepal, Christian church Nepal, worship, prayer, choir, youth fellowship">
+    <meta name="author" content="Sugam Prathana Bhawan">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sugam Prathana Bhawan | Sugam Church in Nepal">
+    <meta property="og:description" content="A Christian church in Nepal for worship, prayer, choir, youth fellowship, and community.">
+    <meta property="og:locale" content="en_NP">
+    <meta name="twitter:card" content="summary">
+    <title>Sugam Prathana Bhawan | Sugam Church in Nepal</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Church",
+      "name": "Sugam Prathana Bhawan",
+      "alternateName": ["Sugam Church", "Sugam Prathana Bhawan Church"],
+      "description": "Christian church in Nepal for worship, prayer, choir, youth fellowship, and community.",
+      "email": "sugamprathanabhawan@gmail.com",
+      "areaServed": { "@type": "Country", "name": "Nepal" },
+      "sameAs": [
+        "https://www.facebook.com/share/19AMMJ1ini/?mibextid=wwXIfr",
+        "https://youtube.com/@sugamchurchmedia?si=JCEBJlGDN92HzGJJ"
+      ]
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,7 +186,7 @@
             <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
                 <i class="fa-solid fa-music"></i> Bhajan
             </a>
-            <a href="choirattendance.html" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
+            <a href="choirattendance.html" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
                 <i class="fa-solid fa-clipboard-check"></i> Attendance
             </a>
         </div>
@@ -186,9 +209,8 @@
                     <a href="youthroutine.html" class="hover:text-primary-500 transition">Youth</a>
                     <a href="choir.html" class="hover:text-primary-500 transition">Choir</a>
                     <a href="calender.html" class="hover:text-primary-500 transition">Calendar</a>
-                    <a href="/laws.html" class="hover:text-primary-500 transition">Laws</a>
+                    <a href="laws.html" class="hover:text-primary-500 transition">Laws</a>
                     <a href="#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
-                    
                 </div>
 
                 <!-- Mobile Menu Toggle -->
@@ -201,12 +223,13 @@
             <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
                 <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
                 <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
-                <a href="https://sugamca.netlify.app/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+                <a href="choirattendance.html" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
                 <hr class="w-16 border-gray-300 my-2">
                 <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
                 <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
                 <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
                 <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
+                <a href="laws.html" class="mobile-link text-gray-800 hover:text-primary-500">Laws</a>
             </div>
         </nav>
     </header>
@@ -597,9 +620,9 @@
                 { name: "नरेन राई", role: "डिकन", image: "images/ag6.webp" },
                 { name: "मान बहादुर श्रेष्ठ", role: "डिकन", image: "images/ag7.webp" },
                 { name: "स्टीफन तामाङ", role: "डिकन", image: "images/ag8.webp" },
-                { name: "आर्यन राई", role: "आराधक", image: "images/aryan.webp" },
-                { name: "ममता राई", role: "आराधक", image: "images/mamata.webp" },
-                { name: "सृष्टि खड्का", role: "आराधक", image: "images/srishti.webp" }
+                { name: "आर्यन राई", role: "आराधक", image: "images/logos.webp" },
+                { name: "ममता राई", role: "आराधक", image: "images/logos.webp" },
+                { name: "सृष्टि खड्का", role: "आराधक", image: "images/logos.webp" }
             ];
 
             leadershipGrid.innerHTML = '';
@@ -608,7 +631,7 @@
                 leadershipGrid.innerHTML += `
                     <div class="scroll-anim ${index % 2 !== 0 ? 'delay-100' : ''} text-center group">
                         <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 border-4 border-primary-50 group-hover:border-primary-500 transition-colors duration-300">
-                            <img src="${leader.image}" alt="${leader.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                    <img src="${leader.image}" alt="${leader.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" onerror="this.onerror=null;this.src='images/logos.webp';">
                         </div>
                         <h4 class="font-bold text-gray-900 text-lg">${leader.name}</h4>
                         <p class="text-primary-500 text-sm font-medium">${leader.role}</p>
@@ -663,5 +686,8 @@
             });
         });
     </script>
+
+    <!-- Embedded Sticky Church Chatbot Script -->
+    <script src="chatbot/chatbot.js" defer></script>
 </body>
 </html>
