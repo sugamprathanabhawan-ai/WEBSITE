@@ -1,738 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sugam Church Choir Ministry: worship resources, songs, and choir fellowship at Sugam Prathana Bhawan in Nepal.">
-    <meta name="keywords" content="Sugam Church choir, Sugam Prathana Bhawan choir, church choir Nepal, worship songs">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Church Choir Ministry | Sugam Prathana Bhawan">
-    <meta property="og:description" content="Worship resources and choir fellowship for Sugam Church in Nepal.">
-    <title>Church Choir Ministry | Sugam Prathana Bhawan</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+[notices]
+Choir fellowship takes place every Saturday. Please come prepared and on time.
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#87ceeb',
-                            600: '#38bdf8',
-                            900: '#0c4a6e',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        inter: ['"Inter"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+[schedule]
+month1|Shrawn
+date|16
+time1|9:50 - 10:30
+work1|Choir practice & meeting
+date|23:
+time1|9:00 - 9:40
+work1|Choir practice
+time2|9:40 - 10:40
+work2|Choir class (Swatantrata)
+date|30:
+time1|9:00 - 9:40
+work1|Choir practice
+time2|9:40 - 10:40
+work2|Choir class (Leadership & Responsibility)
 
-    <!-- Custom Styles -->
-    <style>
-        .glass-light {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(125, 211, 252, 0.5);
-        }
+month2|Bhadra
+date|6:
+time1|9:40 - 10:40
+work1|Choir practice & meeting
+date|13:
+time1|9:40 - 10:40
+work1|(2 sat practice 30 min each.)
 
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
+date|20:
+time1|9:50 - 10:15
+work1|Vocal practice
+time2|10:15 - 10:40
+work2|Choir practice(Uthera)
 
-        .fade-in-delayed {
-            animation: fadeIn 1s ease-out 0.3s forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+date|27:
+time1|9:40 - 10:40 
+work1|Choir practice
 
-        .loader {
-            border: 4px solid rgba(125, 211, 252, 0.3);
-            border-top: 4px solid #38bdf8;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-</head>
-<body class="font-sans text-gray-800 bg-slate-50 antialiased selection:bg-sky-300 selection:text-sky-950">
 
-    <!-- Header & Navigation Wrapper -->
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 flex flex-col transition-all duration-300 bg-white shadow-md">
-        <!-- Quick Nav Bar -->
-        <div id="quick-nav" class="bg-primary-900 text-white py-1.5 px-6 md:px-12 flex justify-end gap-6 text-sm border-b border-primary-600/30">
-            <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
-                <i class="fa-solid fa-book-bible"></i> Bible
-            </a>
-            <a href="https://nepalichristiansongs.com/" target="_blank" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
-                <i class="fa-solid fa-music"></i> Bhajan
-            </a>
-            <a href="choirattendance.html" class="hover:text-primary-500 transition-colors flex items-center gap-2 font-medium">
-                <i class="fa-solid fa-clipboard-check"></i> Attendance
-            </a>
-        </div>
 
-        <!-- Main Navigation -->
-        <nav id="navbar" class="w-full py-3 px-6 md:px-12 bg-white">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <a href="index.html" class="flex items-center gap-3 text-gray-800 z-50 group">
-                    <img src="images/logos.webp" alt="Sugam Prathana Bhawan Logo" class="w-10 h-10 rounded-full object-cover shadow-lg" onerror="this.src='https://via.placeholder.com/40'"/>
-                    <span class="font-semibold text-lg md:text-xl tracking-wide text-gray-800">
-                        Sugam Prathana Bhawan
-                    </span>
-                </a>
-                
-                <div class="hidden md:flex items-center space-x-8 text-gray-800 font-medium">
-                    <a href="index.html" class="hover:text-primary-500 transition">Home</a>
-                    <a href="youthroutine.html" class="hover:text-primary-500 transition">Youth</a>
-                    <a href="choir.html" class="text-primary-500 font-semibold transition">Choir</a>
-                    <a href="calender.html" class="hover:text-primary-500 transition">Calendar</a>
-                    <a href="laws.html" class="hover:text-primary-500 transition">Laws</a>
-                    <a href="index.html#contact" class="px-6 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 hover:shadow-lg transition transform hover:-translate-y-0.5">Visit Us</a>
-                </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-gray-800 text-2xl z-50 focus:outline-none">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center gap-6 text-xl font-medium translate-x-full transition-transform duration-300 z-40">
-                <a href="https://www.wordproject.org/bibles/ne/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-book-bible"></i> Bible</a>
-                <a href="https://nepalichristiansongs.com/" target="_blank" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-music"></i> Bhajan</a>
-                <a href="choirattendance.html" class="mobile-link text-primary-600 hover:text-primary-500"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
-                <hr class="w-16 border-gray-300 my-2">
-                <a href="index.html" class="mobile-link text-gray-800 hover:text-primary-500">Home</a>
-                <a href="youthroutine.html" class="mobile-link text-gray-800 hover:text-primary-500">Youth</a>
-                <a href="choir.html" class="mobile-link text-gray-800 hover:text-primary-500">Choir</a>
-                <a href="calender.html" class="mobile-link text-gray-800 hover:text-primary-500">Calendar</a>
-                <a href="laws.html" class="mobile-link text-gray-800 hover:text-primary-500">Laws</a>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Layer 1: Hero Section -->
-    <header class="relative w-full h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10s] ease-in-out hover:scale-105" 
-             style="background-image: url('images/choir2.webp');">
-        </div>
-        
-        <div class="absolute inset-0 bg-gradient-to-b from-sky-950/70 via-sky-800/60 to-sky-950/90"></div>
-        
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
-            <span class="text-sky-300 font-semibold tracking-widest uppercase mb-4 text-sm md:text-base fade-in">Sugam Prathana Bhawan</span>
-            <h1 class="font-serif text-5xl md:text-7xl font-bold text-white mb-6 leading-tight fade-in drop-shadow-lg">
-                Church Choir Ministry
-            </h1>
-            <p class="text-lg md:text-2xl text-sky-100 font-light mb-10 fade-in-delayed drop-shadow-md">
-                Serve God through worship, music, and unity.
-            </p>
-            <a href="#resources" class="fade-in-delayed inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-sky-950 bg-sky-400 rounded-full hover:bg-sky-300 hover:-translate-y-1 transition-all duration-300 shadow-[0_0_20px_rgba(56,189,248,0.4)]">
-                Explore Songs
-            </a>
-        </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-sky-200/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
-    </header>
 
-    <!-- Choir Notices & Routine (loaded from choirroutine.txt) -->
-    <section id="choir-routine" class="py-16 md:py-20 bg-white">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-10">
-                <span class="text-sky-600 font-semibold tracking-widest uppercase text-xs">Choir Fellowship</span>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-sky-950 mt-2">Notices &amp; Routine</h2>
-                <div class="w-20 h-1 bg-sky-400 mx-auto rounded-full mt-4"></div>
-            </div>
+[layout]
+5sats:
 
-            <div id="choir-notice-container" class="mb-8"></div>
-            <div id="choir-schedule-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
-            <div id="choir-layout-container" class="mt-8"></div>
+1st sat:
+prac:9:40 - 10:40(prac + new songs/meetings)
 
-            <div id="choir-routine-loading" class="py-10 text-center text-sky-700 flex flex-col items-center">
-                <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3"></i>
-                <p class="font-medium">Loading choir notices and routine...</p>
-            </div>
+2nd sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
 
-            <div id="choir-routine-error" class="hidden rounded-2xl border border-red-100 bg-red-50 px-6 py-5 text-center text-red-700">
-                <i class="fa-solid fa-circle-exclamation text-xl mb-2"></i>
-                <p class="font-semibold">Unable to load choir routine</p>
-                <p id="choir-routine-error-message" class="text-sm text-red-600 mt-1">Please make sure choirroutine.txt exists.</p>
-            </div>
-        </div>
-    </section>
+3rd sat: 
+Vocal practice: 9:50 - 10:15 
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
 
-    <!-- Layer 2: Choir Songs & Resources -->
-    <section id="resources" class="py-24 bg-sky-50/50">
-        <div class="max-w-7xl mx-auto px-6">
-            
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-serif font-bold text-sky-950 mb-4">Choir Resources</h2>
-                <div class="w-24 h-1 bg-sky-400 mx-auto rounded-full"></div>
-            </div>
+4th sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
 
-            <!-- Main Layout Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left Side: Song List -->
-                <div class="lg:col-span-4 flex flex-col gap-3 sticky top-28">
-                    <div class="glass-light rounded-2xl p-6 shadow-sm border border-sky-100">
-                        <div class="flex justify-between items-center mb-4 px-2">
-                            <h3 class="text-xl font-semibold text-sky-950">Available Files</h3>
-                            <span id="file-count" class="text-xs font-bold bg-sky-100 text-sky-700 px-2 py-1 rounded-full">0</span>
-                        </div>
-                        <div id="resource-list" class="flex flex-col gap-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
-                            <div class="text-center p-4 text-sky-600/70 text-sm animate-pulse">Scanning static folder...</div>
-                        </div>
-                    </div>
-                </div>
+5th sat:
+Vocal practice: 9:50 - 10:15 (25 min) 
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
 
-                <!-- Right Side: Viewer -->
-                <div class="lg:col-span-8">
-                    <div id="resource-actions" class="hidden mb-3 flex flex-wrap justify-end gap-2">
-                        <a id="download-resource" href="#" download class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-colors"><i class="fa-solid fa-download"></i> Download</a>
-                        <button id="fullscreen-resource" type="button" class="inline-flex items-center gap-2 rounded-lg bg-sky-900 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-800 transition-colors"><i class="fa-solid fa-expand"></i> Full screen</button>
-                        <a id="open-resource" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-sky-200 bg-white px-3 py-2 text-sm font-semibold text-sky-900 hover:bg-sky-50 transition-colors">Open</a>
-                    </div>
-                    <div class="glass-light rounded-2xl shadow-lg border border-sky-200 overflow-hidden relative min-h-[400px] md:min-h-[600px] flex items-center justify-center bg-white group transition-all duration-300 hover:shadow-xl hover:border-sky-300">
-                        
-                        <!-- Initial Placeholder -->
-                        <div id="viewer-placeholder" class="text-center p-8 text-sky-300">
-                            <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <p class="text-lg text-sky-700">Select a PDF or image from the left.</p>
-                        </div>
+4sats:
+1st sat:
+prac:9:40 - 10:40(prac + new songs/meetings)
 
-                        <!-- Loading Indicator -->
-                        <div id="viewer-loading" class="absolute inset-0 bg-white/90 backdrop-blur-sm z-10 hidden flex-col items-center justify-center">
-                            <div class="loader mb-4"></div>
-                            <p class="text-sky-950 font-medium">Loading resource...</p>
-                        </div>
+2nd sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
 
-                        <!-- Content Container -->
-                        <div id="viewer-content" class="w-full h-full absolute inset-0 hidden bg-slate-100"></div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Songs to Listen (loaded from youtube.txt) -->
-    <section id="youtube-songs" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="text-sky-600 font-semibold tracking-widest uppercase text-xs">Worship Together</span>
-                <h2 class="text-3xl md:text-5xl font-serif font-bold text-sky-950 mt-2 mb-4">Songs to Listen</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto">Listen to and practise the choir songs directly from this page.</p>
-                <div class="w-24 h-1 bg-sky-400 mx-auto rounded-full mt-5"></div>
-            </div>
-
-            <div id="youtube-songs-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-                <div class="md:col-span-2 xl:col-span-3 py-8 text-center text-sky-700">
-                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3"></i>
-                    <p class="font-medium">Loading songs...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-sky-950 border-t border-sky-800 py-8">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="text-center md:text-left">
-                <h4 class="text-white font-serif font-bold text-xl">Sugam Prathana Bhawan</h4>
-                <p class="text-sky-400 text-sm mt-1">Choir Ministry</p>
-            </div>
-            <div class="text-sky-200/50 text-sm">
-                &copy; 2026 All Rights Reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript Logic -->
-    <script>
-        // Mobile Navigation Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('translate-x-full');
-                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('translate-x-full') 
-                    ? '<i class="fa-solid fa-bars"></i>' 
-                    : '<i class="fa-solid fa-xmark text-gray-800"></i>';
-            });
-
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('translate-x-full');
-                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            loadChoirRoutine();
-            loadYouTubeSongs();
-
-            const MANIFEST_PATH = './static/resource-manifest.json';
-            const FALLBACK_FILES = ['SONGS.pdf'];
-            let resources = [];
-            let activeItemIndex = null;
-
-            const listContainer = document.getElementById('resource-list');
-            const fileCountBadge = document.getElementById('file-count');
-            const viewerPlaceholder = document.getElementById('viewer-placeholder');
-            const viewerLoading = document.getElementById('viewer-loading');
-            const viewerContent = document.getElementById('viewer-content');
-            const resourceActions = document.getElementById('resource-actions');
-            const downloadResource = document.getElementById('download-resource');
-            const fullscreenResource = document.getElementById('fullscreen-resource');
-            const openResource = document.getElementById('open-resource');
-
-            const supportedFiles = (files) => [...new Set(files
-                .map(file => typeof file === 'string' ? decodeURIComponent(file).split('/').pop() : '')
-                .filter(file => file && /\.(pdf|jpe?g|png|webp)$/i.test(file)))].sort((a, b) => a.localeCompare(b));
-
-            async function getManifestFiles() {
-                const response = await fetch(MANIFEST_PATH, { cache: 'no-store' });
-                if (!response.ok) throw new Error('Resource manifest unavailable');
-                const manifest = await response.json();
-                return Array.isArray(manifest) ? manifest : manifest.files || [];
-            }
-
-            async function getDirectoryFiles() {
-                const response = await fetch('./static/', { cache: 'no-store' });
-                if (!response.ok) throw new Error('Directory listing unavailable');
-                const folderDocument = new DOMParser().parseFromString(await response.text(), 'text/html');
-                return [...folderDocument.querySelectorAll('a')].map(link => link.getAttribute('href') || '');
-            }
-
-            async function fetchStaticFiles() {
-                const sources = await Promise.allSettled([getManifestFiles(), getDirectoryFiles()]);
-                const files = supportedFiles(sources.flatMap(source => source.status === 'fulfilled' ? source.value : []));
-                const availableFiles = files.length ? files : FALLBACK_FILES;
-                resources = availableFiles.map(file => ({
-                    name: file.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
-                    file
-                }));
-                fileCountBadge.innerText = resources.length;
-                renderResources();
-            }
-
-            function renderResources() {
-                listContainer.innerHTML = '';
-                
-                resources.forEach((res, index) => {
-                    const btn = document.createElement('button');
-                    
-                    btn.className = `w-full text-left px-4 py-3 rounded-xl transition-all duration-300 border flex items-center justify-between group
-                        ${activeItemIndex === index 
-                            ? 'bg-sky-700 text-white border-sky-700 shadow-md' 
-                            : 'bg-white text-sky-900 border-sky-100 hover:border-sky-400 hover:bg-sky-50'}`;
-                    
-                    const ext = res.file.split('.').pop().toLowerCase();
-                    const isPdf = ext === 'pdf';
-                    
-                    const iconSvg = isPdf 
-                        ? `<svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`
-                        : `<svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`;
-
-                    btn.innerHTML = `
-                        <span class="font-medium truncate capitalize">${res.name}</span>
-                        ${iconSvg}
-                    `;
-                    
-                    btn.addEventListener('click', () => loadResource(index));
-                    
-                    listContainer.appendChild(btn);
-                });
-            }
-
-            function loadResource(index) {
-                activeItemIndex = index;
-                renderResources();
-
-                const resource = resources[index];
-                const file = resource.file;
-                const ext = file.split(".").pop().toLowerCase();
-                const fullPath = "./static/" + encodeURIComponent(file);
-
-                viewerPlaceholder.classList.add("hidden");
-                viewerLoading.classList.remove("hidden");
-                viewerLoading.classList.add("flex");
-                viewerContent.innerHTML = "";
-                viewerContent.classList.add("hidden");
-                resourceActions.classList.remove('hidden');
-                downloadResource.href = fullPath;
-                downloadResource.download = file;
-                openResource.href = fullPath;
-
-                if (ext === "pdf") {
-                    const iframe = document.createElement("iframe");
-                    iframe.src = fullPath + "#toolbar=1&navpanes=0&scrollbar=1";
-                    iframe.allowFullscreen = true;
-                    iframe.className = "w-full h-full border-0 bg-white";
-
-                    let fallbackTimer = setTimeout(() => {
-                        if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.innerHTML === '') {
-                            viewerContent.innerHTML = `
-                                <div class="flex flex-col items-center justify-center h-full p-10 bg-white text-center">
-                                    <p class="text-sky-800 font-semibold mb-4">Unable to display PDF preview.</p>
-                                    <a href="${fullPath}" target="_blank" class="px-5 py-3 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">Open PDF in new tab</a>
-                                </div>
-                            `;
-                            viewerLoading.classList.add("hidden");
-                            viewerLoading.classList.remove("flex");
-                            viewerContent.classList.remove("hidden");
-                        }
-                    }, 2000);
-
-                    iframe.onload = () => {
-                        clearTimeout(fallbackTimer);
-                        viewerLoading.classList.add("hidden");
-                        viewerLoading.classList.remove("flex");
-                        viewerContent.classList.remove("hidden");
-                    };
-
-                    viewerContent.appendChild(iframe);
-
-                } else {
-                    const img = new Image();
-                    img.src = fullPath;
-                    img.className = "w-full h-full object-contain p-4 bg-white";
-
-                    img.onload = () => {
-                        viewerLoading.classList.add("hidden");
-                        viewerLoading.classList.remove("flex");
-                        viewerContent.classList.remove("hidden");
-                    };
-
-                    img.onerror = () => {
-                        viewerContent.innerHTML = `
-                            <div class="flex flex-col items-center justify-center h-full text-red-500 bg-white">
-                                Image failed to load.
-                            </div>
-                        `;
-                        viewerLoading.classList.add("hidden");
-                        viewerLoading.classList.remove("flex");
-                        viewerContent.classList.remove("hidden");
-                    };
-
-                    viewerContent.appendChild(img);
-                }
-            }
-
-            fullscreenResource.addEventListener('click', () => {
-                const request = viewerContent.requestFullscreen || viewerContent.webkitRequestFullscreen;
-                if (request) request.call(viewerContent);
-                else if (openResource.href && openResource.href !== '#') window.open(openResource.href, '_blank', 'noopener');
-            });
-
-            fetchStaticFiles().catch(error => {
-                console.error('Resource folder load failed:', error);
-                resources = FALLBACK_FILES.map(file => ({ name: file.replace(/\.[^/.]+$/, ''), file }));
-                fileCountBadge.innerText = resources.length;
-                renderResources();
-            });
-        });
-
-        // Simple choirroutine.txt format:
-        // [notices]
-        // A notice for the choir.
-        //
-        // [schedule]
-        // month1|Shrawn
-        // date|16
-        // time1|9:10 - 9:30
-        // work1|Choir practice
-        // time2|9:30 - 9:50
-        // work2|Swatantrata
-        //
-        // month2|Bhadra
-        //
-        // [layout]
-        // 5sats:
-        // 1st sat:
-        // prac: 9:40 - 10:40 (practice + new songs/meetings)
-        async function loadChoirRoutine() {
-            const loading = document.getElementById('choir-routine-loading');
-            const errorBox = document.getElementById('choir-routine-error');
-            const errorMessage = document.getElementById('choir-routine-error-message');
-            const noticeContainer = document.getElementById('choir-notice-container');
-            const scheduleContainer = document.getElementById('choir-schedule-container');
-            const layoutContainer = document.getElementById('choir-layout-container');
-
-            const escapeHtml = (value) => String(value || '').replace(/[&<>'"]/g, character => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-            }[character]));
-
-            try {
-                const response = await fetch('choirroutine.txt', { cache: 'no-store' });
-                if (!response.ok) throw new Error(`File not found (Status: ${response.status})`);
-
-                const notices = [];
-                const months = [];
-                const layoutGroups = [];
-                let section = '';
-                let currentMonth = null;
-                let currentDate = null;
-                let currentLayoutGroup = null;
-                let currentSaturday = null;
-
-                const getKeyAndValue = (line) => {
-                    const divider = line.indexOf('|');
-                    if (divider === -1) return [line.trim().toLowerCase(), ''];
-                    return [line.slice(0, divider).trim().toLowerCase(), line.slice(divider + 1).trim()];
-                };
-
-                for (const originalLine of (await response.text()).split(/\r?\n/)) {
-                    const line = originalLine.trim();
-                    if (!line || line.startsWith('#')) continue;
-
-                    const heading = line.toLowerCase();
-                    if (heading === '[notices]') {
-                        section = 'notices';
-                        continue;
-                    }
-                    if (heading === '[schedule]') {
-                        section = 'schedule';
-                        continue;
-                    }
-                    if (heading === '[layout]') {
-                        section = 'layout';
-                        continue;
-                    }
-
-                    if (section === 'notices') {
-                        notices.push(line);
-                        continue;
-                    }
-                    if (section === 'layout') {
-                        const weekendCount = line.match(/^(\d+)\s*sats?\s*:\s*$/i);
-                        const saturday = line.match(/^(\d+(?:st|nd|rd|th))\s+sat\s*:\s*$/i);
-                        if (weekendCount) {
-                            currentLayoutGroup = { title: `${weekendCount[1]} Saturdays`, days: [] };
-                            layoutGroups.push(currentLayoutGroup);
-                            currentSaturday = null;
-                        } else if (saturday && currentLayoutGroup) {
-                            currentSaturday = { title: `${saturday[1]} Saturday`, activities: [] };
-                            currentLayoutGroup.days.push(currentSaturday);
-                        } else if (currentSaturday) {
-                            currentSaturday.activities.push(line);
-                        }
-                        continue;
-                    }
-                    if (section !== 'schedule') continue;
-
-                    const [key, value] = getKeyAndValue(line);
-                    if (/^month\d*$/.test(key)) {
-                        currentMonth = { name: value || 'Choir Routine', dates: [] };
-                        months.push(currentMonth);
-                        currentDate = null;
-                    } else if (/^date\d*$/.test(key) && currentMonth) {
-                        currentDate = { date: value || '—', items: [] };
-                        currentMonth.dates.push(currentDate);
-                    } else if (/^time\d*$/.test(key) && currentDate) {
-                        currentDate.items.push({ time: value, work: '' });
-                    } else if (/^(work|activity)\d*$/.test(key) && currentDate) {
-                        const itemNumber = key.match(/\d+$/)?.[0];
-                        let item = itemNumber
-                            ? currentDate.items[Number(itemNumber) - 1]
-                            : currentDate.items.at(-1);
-                        if (!item) {
-                            item = { time: '', work: '' };
-                            currentDate.items.push(item);
-                        }
-                        item.work = value;
-                    }
-                }
-
-                if (notices.length) {
-                    noticeContainer.innerHTML = `
-                        <div class="rounded-2xl border border-sky-100 bg-sky-50/70 p-5 md:p-6 shadow-sm flex gap-4">
-                            <div class="shrink-0 w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center"><i class="fa-solid fa-bell"></i></div>
-                            <div>
-                                <h3 class="font-bold text-sky-950 mb-2">Notice</h3>
-                                <ul class="space-y-1.5 text-sm md:text-base text-slate-700">${notices.map(notice => `<li class="flex gap-2"><span class="text-sky-500 font-bold">•</span><span>${escapeHtml(notice)}</span></li>`).join('')}</ul>
-                            </div>
-                        </div>`;
-                }
-
-                if (months.length) {
-                    scheduleContainer.innerHTML = months.map((month, monthIndex) => `
-                        <article class="rounded-2xl overflow-hidden border border-sky-100 bg-white shadow-md shadow-sky-100/50">
-                            <header class="bg-sky-700 text-white px-5 py-4 flex items-center gap-3">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                <h3 class="font-serif text-xl font-bold uppercase tracking-wide">${escapeHtml(month.name)}</h3>
-                            </header>
-                            <div class="divide-y divide-sky-100">
-                                ${month.dates.length ? month.dates.map(day => `
-                                    <div class="p-5">
-                                        <p class="text-xs font-bold uppercase tracking-wider text-sky-600 mb-3">Date: ${escapeHtml(day.date)}</p>
-                                        ${day.items.length ? `<div class="space-y-2">${day.items.map(item => `
-                                            <div class="grid grid-cols-[auto_1fr] gap-x-4 text-sm">
-                                                <time class="font-semibold text-sky-900 whitespace-nowrap">${escapeHtml(item.time || 'Time TBA')}</time>
-                                                <p class="text-slate-700">${escapeHtml(item.work || 'Activity TBA')}</p>
-                                            </div>`).join('')}</div>` : '<p class="text-sm text-slate-500">Routine details will be added soon.</p>'}
-                                    </div>`).join('') : '<p class="p-5 text-sm text-slate-500">Routine details will be added soon.</p>'}
-                            </div>
-                        </article>`).join('');
-                }
-
-                if (layoutGroups.length) {
-                    layoutContainer.innerHTML = `
-                        <section class="rounded-2xl border border-sky-100 bg-sky-50/60 p-5 md:p-7 shadow-sm">
-                            <div class="text-center mb-6">
-                                <span class="text-xs font-bold tracking-widest uppercase text-sky-600">Choir Fellowship</span>
-                                <h3 class="font-serif text-2xl font-bold text-sky-950 mt-1">Monthly Practice Layout</h3>
-                            </div>
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                ${layoutGroups.map(group => `
-                                    <article class="rounded-xl overflow-hidden bg-white border border-sky-100 shadow-sm">
-                                        <header class="bg-sky-100 px-5 py-3 border-b border-sky-200">
-                                            <h4 class="font-bold text-sky-950">${escapeHtml(group.title)}</h4>
-                                        </header>
-                                        <div class="divide-y divide-sky-100">
-                                            ${group.days.map(day => `
-                                                <div class="p-5">
-                                                    <h5 class="font-semibold text-sky-800 mb-2">${escapeHtml(day.title)}</h5>
-                                                    <ul class="space-y-1.5 text-sm text-slate-700">
-                                                        ${day.activities.map(activity => `<li class="flex gap-2"><span class="text-sky-500">•</span><span>${escapeHtml(activity)}</span></li>`).join('') || '<li class="text-slate-500">Details will be added soon.</li>'}
-                                                    </ul>
-                                                </div>`).join('') || '<p class="p-5 text-sm text-slate-500">Details will be added soon.</p>'}
-                                        </div>
-                                    </article>`).join('')}
-                            </div>
-                        </section>`;
-                }
-
-                loading.classList.add('hidden');
-            } catch (error) {
-                loading.classList.add('hidden');
-                errorBox.classList.remove('hidden');
-                errorMessage.textContent = error.message;
-                console.error('Choir routine load error:', error);
-            }
-        }
-
-        async function loadYouTubeSongs() {
-            const container = document.getElementById('youtube-songs-container');
-            const escapeHtml = (value) => String(value || '').replace(/[&<>'"]/g, character => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-            }[character]));
-
-            const getYouTubeVideoId = (link) => {
-                try {
-                    const url = new URL(link.trim());
-                    const host = url.hostname.replace(/^www\./, '').toLowerCase();
-                    let videoId = '';
-
-                    if (host === 'youtu.be') {
-                        videoId = url.pathname.split('/').filter(Boolean)[0] || '';
-                    } else if (['youtube.com', 'm.youtube.com', 'music.youtube.com', 'youtube-nocookie.com'].includes(host)) {
-                        videoId = url.searchParams.get('v') || '';
-                        const pathParts = url.pathname.split('/').filter(Boolean);
-                        if (!videoId && ['embed', 'shorts', 'live'].includes(pathParts[0])) videoId = pathParts[1] || '';
-                    }
-
-                    return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? videoId : '';
-                } catch {
-                    return '';
-                }
-            };
-
-            try {
-                const response = await fetch('youtube.txt', { cache: 'no-store' });
-                if (!response.ok) throw new Error('youtube.txt could not be found.');
-
-                let inYouTubeSection = false;
-                const songs = [];
-                for (const rawLine of (await response.text()).split(/\r?\n/)) {
-                    const line = rawLine.trim();
-                    if (!line || line.startsWith('#')) continue;
-                    if (line.toLowerCase() === '[youtube]') {
-                        inYouTubeSection = true;
-                        continue;
-                    }
-                    if (!inYouTubeSection) continue;
-
-                    const divider = line.indexOf('|');
-                    if (divider === -1) continue;
-                    const name = line.slice(0, divider).trim();
-                    const videoId = getYouTubeVideoId(line.slice(divider + 1));
-                    if (name && videoId) songs.push({ name, videoId });
-                }
-
-                if (!songs.length) {
-                    container.innerHTML = `
-                        <div class="md:col-span-2 xl:col-span-3 rounded-2xl border border-dashed border-sky-200 bg-sky-50 p-8 text-center text-slate-600">
-                            <i class="fa-brands fa-youtube text-3xl text-red-500 mb-3"></i>
-                            <p class="font-semibold text-sky-950">No YouTube songs have been added yet.</p>
-                            <p class="text-sm mt-1">Add songs under <code class="text-sky-700">[youtube]</code> in youtube.txt.</p>
-                        </div>`;
-                    return;
-                }
-
-                container.innerHTML = songs.map(song => `
-                    <article class="rounded-2xl overflow-hidden bg-white border border-sky-100 shadow-md shadow-sky-100/60">
-                        <div class="aspect-video bg-slate-100">
-                            <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${song.videoId}" title="${escapeHtml(song.name)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                        <div class="flex items-center justify-between gap-4 px-5 py-4">
-                            <h3 class="font-semibold text-sky-950 leading-snug">${escapeHtml(song.name)}</h3>
-                            <a class="shrink-0 text-red-600 hover:text-red-700 transition-colors" href="https://www.youtube.com/watch?v=${song.videoId}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(song.name)} on YouTube"><i class="fa-brands fa-youtube text-xl"></i></a>
-                        </div>
-                    </article>`).join('');
-            } catch (error) {
-                container.innerHTML = `
-                    <div class="md:col-span-2 xl:col-span-3 rounded-2xl border border-red-100 bg-red-50 p-8 text-center text-red-700">
-                        <i class="fa-solid fa-circle-exclamation text-xl mb-2"></i>
-                        <p class="font-semibold">Unable to load YouTube songs</p>
-                        <p class="text-sm mt-1">${escapeHtml(error.message)}</p>
-                    </div>`;
-                console.error('YouTube song load error:', error);
-            }
-        }
-    </script>
-</body>
-</html>
+3rd sat: 
+Vocal practice: 9:30 - 10:15 (45min)
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
