@@ -1,5 +1,5 @@
 [notices]
-Choir fellowship takes place every Friday. Please come prepared and on time.
+Choir fellowship takes place every Saturday. Please come prepared and on time.
 
 [schedule]
 month1|Shrawn
@@ -12,7 +12,7 @@ work2|Swatantrata
 month2|Bhadra
 
 [layout]
-5sats:
+5sats(This is the base for out routine but please see the upward monthly routine):
 
 1st sat:
 prac:9:40 - 10:40(prac + new songs/meetings)
@@ -37,7 +37,7 @@ or:
 prac : 9:10 - 9:40(direct standing)
 Extra classes  / new song prac => 9:40-10:40 (40 min)
 
-4sats:
+4sats(This is the base for out routine but please see the upward monthly routine):
 4sats:
 1st sat:
 prac:9:40 - 10:40(prac + new songs/meetings)
@@ -51,7 +51,3 @@ prac : 10:15 - 10:40(direct standing)
 or:
 prac : 9:10 - 9:40(direct standing)
 Extra classes  / new song prac => 9:40-10:40 (40 min)
-
-
-4th sat:
-prac : 9:40 - 10:40 
