@@ -10,8 +10,48 @@ time2|9:30 - 9:50
 work2|Swatantrata
 
 month2|Bhadra
-date|16
-time1|9:10 - 9:30
-work1|Choir practice
-time2|9:30 - 9:50
-work2|Swatantrata
+
+[layout]
+5sats:
+
+1st sat:
+prac:9:40 - 10:40(prac + new songs/meetings)
+
+2nd sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
+
+3rd sat: 
+Vocal practice: 9:50 - 10:15 
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
+
+4th sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
+
+5th sat:
+Vocal practice: 9:50 - 10:15 (25 min) 
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
+
+4sats:
+4sats:
+1st sat:
+prac:9:40 - 10:40(prac + new songs/meetings)
+
+2nd sat:
+prac : 9:40 - 10:40 (2 sat practice 30 min each.)
+
+3rd sat: 
+Vocal practice: 9:30 - 10:15 (45min)
+prac : 10:15 - 10:40(direct standing)
+or:
+prac : 9:10 - 9:40(direct standing)
+Extra classes  / new song prac => 9:40-10:40 (40 min)
+
+
+4th sat:
+prac : 9:40 - 10:40 
