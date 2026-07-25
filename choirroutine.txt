@@ -4,12 +4,44 @@ Choir fellowship takes place every Saturday. Please come prepared and on time.
 [schedule]
 month1|Shrawn
 date|16
-time1|9:10 - 9:30
+time1|9:50 - 10:30
+work1|Choir practice & meeting
+date|23:
+time1|9:00 - 9:40
 work1|Choir practice
-time2|9:30 - 9:50
-work2|Swatantrata
+time2|9:40 - 10:40
+work2|Choir class (Swatantrata)
+date|30:
+time1|9:00 - 9:40
+work1|Choir practice
+time2|9:40 - 10:40
+work2|Choir class (Leadership & Responsibility)
 
 month2|Bhadra
+date|6:
+time1|9:40 - 10:40
+work1|Choir practice & meeting
+date|13:
+time1|9:40 - 10:40
+work1|(2 sat practice 30 min each.)
+
+date|20:
+time1|9:50 - 10:15
+work1|Vocal practice
+time2|10:15 - 10:40
+work2|Choir practice(Uthera)
+
+
+date|27:
+time1|9:40 - 10:40 
+work1|Choir practice
+
+
+
+
+
+
+
 
 [layout]
 5sats:
