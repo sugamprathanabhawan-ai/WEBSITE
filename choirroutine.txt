@@ -1,0 +1,12 @@
+[notices]
+Choir fellowship takes place every Friday. Please come prepared and on time.
+
+[schedule]
+month1|Shrawn
+date|16
+time1|9:10 - 9:30
+work1|Choir practice
+time2|9:30 - 9:50
+work2|Swatantrata
+
+month2|Bhadra
