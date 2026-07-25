@@ -181,6 +181,7 @@
 
             <div id="choir-notice-container" class="mb-8"></div>
             <div id="choir-schedule-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+            <div id="choir-layout-container" class="mt-8"></div>
 
             <div id="choir-routine-loading" class="py-10 text-center text-sky-700 flex flex-col items-center">
                 <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-3"></i>
@@ -468,12 +469,18 @@
         // work2|Swatantrata
         //
         // month2|Bhadra
+        //
+        // [layout]
+        // 5sats:
+        // 1st sat:
+        // prac: 9:40 - 10:40 (practice + new songs/meetings)
         async function loadChoirRoutine() {
             const loading = document.getElementById('choir-routine-loading');
             const errorBox = document.getElementById('choir-routine-error');
             const errorMessage = document.getElementById('choir-routine-error-message');
             const noticeContainer = document.getElementById('choir-notice-container');
             const scheduleContainer = document.getElementById('choir-schedule-container');
+            const layoutContainer = document.getElementById('choir-layout-container');
 
             const escapeHtml = (value) => String(value || '').replace(/[&<>'"]/g, character => ({
                 '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -485,9 +492,12 @@
 
                 const notices = [];
                 const months = [];
+                const layoutGroups = [];
                 let section = '';
                 let currentMonth = null;
                 let currentDate = null;
+                let currentLayoutGroup = null;
+                let currentSaturday = null;
 
                 const getKeyAndValue = (line) => {
                     const divider = line.indexOf('|');
@@ -508,9 +518,28 @@
                         section = 'schedule';
                         continue;
                     }
+                    if (heading === '[layout]') {
+                        section = 'layout';
+                        continue;
+                    }
 
                     if (section === 'notices') {
                         notices.push(line);
+                        continue;
+                    }
+                    if (section === 'layout') {
+                        const weekendCount = line.match(/^(\d+)\s*sats?\s*:\s*$/i);
+                        const saturday = line.match(/^(\d+(?:st|nd|rd|th))\s+sat\s*:\s*$/i);
+                        if (weekendCount) {
+                            currentLayoutGroup = { title: `${weekendCount[1]} Saturdays`, days: [] };
+                            layoutGroups.push(currentLayoutGroup);
+                            currentSaturday = null;
+                        } else if (saturday && currentLayoutGroup) {
+                            currentSaturday = { title: `${saturday[1]} Saturday`, activities: [] };
+                            currentLayoutGroup.days.push(currentSaturday);
+                        } else if (currentSaturday) {
+                            currentSaturday.activities.push(line);
+                        }
                         continue;
                     }
                     if (section !== 'schedule') continue;
@@ -568,6 +597,33 @@
                                     </div>`).join('') : '<p class="p-5 text-sm text-slate-500">Routine details will be added soon.</p>'}
                             </div>
                         </article>`).join('');
+                }
+
+                if (layoutGroups.length) {
+                    layoutContainer.innerHTML = `
+                        <section class="rounded-2xl border border-sky-100 bg-sky-50/60 p-5 md:p-7 shadow-sm">
+                            <div class="text-center mb-6">
+                                <span class="text-xs font-bold tracking-widest uppercase text-sky-600">Choir Fellowship</span>
+                                <h3 class="font-serif text-2xl font-bold text-sky-950 mt-1">Monthly Practice Layout</h3>
+                            </div>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                ${layoutGroups.map(group => `
+                                    <article class="rounded-xl overflow-hidden bg-white border border-sky-100 shadow-sm">
+                                        <header class="bg-sky-100 px-5 py-3 border-b border-sky-200">
+                                            <h4 class="font-bold text-sky-950">${escapeHtml(group.title)}</h4>
+                                        </header>
+                                        <div class="divide-y divide-sky-100">
+                                            ${group.days.map(day => `
+                                                <div class="p-5">
+                                                    <h5 class="font-semibold text-sky-800 mb-2">${escapeHtml(day.title)}</h5>
+                                                    <ul class="space-y-1.5 text-sm text-slate-700">
+                                                        ${day.activities.map(activity => `<li class="flex gap-2"><span class="text-sky-500">•</span><span>${escapeHtml(activity)}</span></li>`).join('') || '<li class="text-slate-500">Details will be added soon.</li>'}
+                                                    </ul>
+                                                </div>`).join('') || '<p class="p-5 text-sm text-slate-500">Details will be added soon.</p>'}
+                                        </div>
+                                    </article>`).join('')}
+                            </div>
+                        </section>`;
                 }
 
                 loading.classList.add('hidden');
