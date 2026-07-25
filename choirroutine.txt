@@ -12,7 +12,8 @@ work2|Swatantrata
 month2|Bhadra
 
 [layout]
-5sats(This is the base for out routine but please see the upward monthly routine):
+5sats:
+(This is the base for out routine but please see the upward monthly routine)
 
 1st sat:
 prac:9:40 - 10:40(prac + new songs/meetings)
@@ -37,8 +38,8 @@ or:
 prac : 9:10 - 9:40(direct standing)
 Extra classes  / new song prac => 9:40-10:40 (40 min)
 
-4sats(This is the base for out routine but please see the upward monthly routine):
 4sats:
+(This is the base for out routine but please see the upward monthly routine)
 1st sat:
 prac:9:40 - 10:40(prac + new songs/meetings)
 
