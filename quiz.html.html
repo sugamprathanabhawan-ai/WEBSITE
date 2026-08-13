@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>Bible Trivia — Streak Mode</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: { extend: {
+    animation: {
+      float: "float 5s ease-in-out infinite",
+      pop: "pop .28s ease-out",
+      shake: "shake .4s ease-in-out",
+      glow: "glow 1.4s ease-in-out infinite alternate"
+    },
+    keyframes: {
+      float: {"0%,100%":{transform:"translateY(0)"},"50%":{transform:"translateY(-7px)"}},
+      pop: {"0%":{transform:"scale(1)"},"55%":{transform:"scale(1.16)"},"100%":{transform:"scale(1)"}},
+      shake: {"0%,100%":{transform:"translateX(0)"},"25%":{transform:"translateX(-7px)"},"75%":{transform:"translateX(7px)"}},
+      glow: {"from":{boxShadow:"0 0 10px rgba(99,102,241,.15)"},"to":{boxShadow:"0 0 30px rgba(168,85,247,.35)"}}
+    }
+  }}
+}
+</script>
+<style>
+*{box-sizing:border-box}
+body{background:
+ radial-gradient(circle at 20% 10%,rgba(99,102,241,.20),transparent 28%),
+ radial-gradient(circle at 85% 85%,rgba(168,85,247,.14),transparent 28%),
+ #050713}
+.glass{background:rgba(10,15,32,.80);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.09);box-shadow:0 20px 70px rgba(0,0,0,.45)}
+.option{transition:.16s ease}
+.option:hover:not(:disabled){transform:translateY(-2px) scale(1.01);border-color:rgba(129,140,248,.55);background:rgba(99,102,241,.12)}
+.option:active:not(:disabled){transform:scale(.985)}
+.correct{background:linear-gradient(135deg,#059669,#22c55e)!important;border-color:#86efac!important;color:white!important;box-shadow:0 0 25px rgba(34,197,94,.35)}
+.wrong{background:linear-gradient(135deg,#b91c1c,#ef4444)!important;border-color:#fca5a5!important;color:white!important}
+.dim{opacity:.35;filter:grayscale(1)}
+.progress{transition:width .25s ease}
+.score-float{position:fixed;pointer-events:none;font-size:1.4rem;font-weight:900;color:#86efac;text-shadow:0 0 15px rgba(134,239,172,.6);animation:up 1s forwards;z-index:100}
+@keyframes up{to{transform:translateY(-60px) scale(1.35);opacity:0}}
+</style>
+</head>
+
+<body class="min-h-screen text-white font-sans flex items-center justify-center p-3 sm:p-6 select-none">
+<main id="app" class="w-full max-w-lg glass rounded-[2rem] overflow-hidden relative">
+
+<!-- HOME -->
+<section id="home" class="p-6 sm:p-8 min-h-[680px] flex flex-col">
+  <div class="flex justify-between items-center mb-8">
+    <div class="text-xs font-black uppercase tracking-[.22em] text-indigo-300">Bible Trivia</div>
+    <button id="soundBtn" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10" aria-label="Toggle sound">🔊</button>
+  </div>
+
+  <div class="flex-1 flex flex-col items-center justify-center text-center">
+    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 grid place-items-center text-5xl shadow-2xl animate-float mb-5">📖</div>
+    <h1 class="text-4xl sm:text-5xl font-black tracking-tight">Bible Trivia</h1>
+    <p class="mt-2 text-indigo-300 font-bold tracking-widest uppercase text-xs">Streak Mode</p>
+    <p id="loadStatus" class="mt-4 text-sm text-slate-400">Checking question bank…</p>
+
+    <button id="playBtn" disabled class="mt-8 w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 font-black text-xl shadow-lg disabled:opacity-40 active:scale-95 transition">
+      PLAY NOW ⚡
+    </button>
+    <button id="dailyBtn" disabled class="mt-3 w-full py-3 rounded-2xl bg-amber-500/10 border border-amber-400/20 text-amber-200 font-bold hover:bg-amber-500/20 transition">
+      🌟 DAILY CHALLENGE
+    </button>
+  </div>
+
+  <div class="grid grid-cols-3 gap-2 mt-7">
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-[10px] text-slate-500 uppercase font-black">High Score</div>
+      <div id="homeHigh" class="text-xl font-black mt-1">0</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-[10px] text-slate-500 uppercase font-black">Best Streak</div>
+      <div id="homeStreak" class="text-xl font-black mt-1">0</div>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
+      <div class="text-[10px] text-slate-500 uppercase font-black">Level</div>
+      <div id="homeLevel" class="text-xl font-black mt-1">1</div>
+    </div>
+  </div>
+  <p class="text-center text-[10px] text-slate-500 mt-4">10 questions • 10 seconds • build the longest streak</p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden min-h-[680px]">
+  <header class="px-5 pt-5 pb-3 border-b border-white/10 bg-black/20">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-black">Score</div>
+        <div id="score" class="text-3xl font-black">0</div>
+      </div>
+      <div class="text-center">
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-black">Combo</div>
+        <div id="combo" class="text-xl font-black text-orange-300">🔥 x0</div>
+      </div>
+      <div class="text-right">
+        <div class="text-[10px] uppercase tracking-widest text-slate-500 font-black">Level</div>
+        <div id="level" class="text-xl font-black text-indigo-300">1</div>
+      </div>
+    </div>
+    <div class="mt-4 h-1.5 bg-white/5 rounded-full overflow-hidden">
+      <div id="timer" class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 progress"></div>
+    </div>
+    <div class="mt-2 flex justify-between text-[10px] font-bold text-slate-500">
+      <span id="timerText">10.0s</span>
+      <span id="questionCount">1 / 10</span>
+    </div>
+  </header>
+
+  <div class="px-5 py-5">
+    <div class="flex items-center justify-between mb-4">
+      <span id="category" class="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-[10px] uppercase tracking-widest font-black">Bible</span>
+      <div class="flex gap-2">
+        <button id="fiftyBtn" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-black hover:bg-white/10">50/50</button>
+        <button id="timeBtn" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-black hover:bg-white/10">+5s</button>
+      </div>
+    </div>
+
+    <div class="mb-7">
+      <div class="text-xs text-slate-500 font-bold mb-2">QUESTION</div>
+      <h2 id="question" class="text-2xl sm:text-[1.7rem] leading-tight font-black">Loading…</h2>
+    </div>
+
+    <div id="options" class="space-y-3"></div>
+
+    <div class="mt-6 flex items-center justify-between">
+      <div id="streakMessage" class="text-xs font-black text-orange-300 min-h-4"></div>
+      <button id="quitBtn" class="text-xs text-slate-500 hover:text-white">Quit round</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" class="hidden p-6 sm:p-8 min-h-[680px]">
+  <div class="text-center">
+    <div id="resultEmoji" class="text-6xl mb-3">🏆</div>
+    <div class="text-xs text-indigo-300 uppercase tracking-[.2em] font-black">Round complete</div>
+    <h2 id="resultTitle" class="text-4xl font-black mt-1">Great run!</h2>
+    <p id="resultMessage" class="text-sm text-slate-400 mt-2"></p>
+
+    <div class="my-7 rounded-3xl bg-gradient-to-br from-indigo-500/15 to-purple-500/10 border border-white/10 p-6">
+      <div class="text-xs uppercase tracking-widest text-slate-500 font-black">Score</div>
+      <div id="finalScore" class="text-6xl font-black mt-1">0</div>
+      <div id="newRecord" class="hidden mt-2 text-amber-300 font-black text-sm">✨ NEW HIGH SCORE</div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2 mb-5">
+      <div class="bg-white/5 rounded-2xl p-3"><div class="text-[10px] text-slate-500 uppercase font-black">Accuracy</div><div id="accuracy" class="text-xl font-black text-emerald-300">0%</div></div>
+      <div class="bg-white/5 rounded-2xl p-3"><div class="text-[10px] text-slate-500 uppercase font-black">Best Combo</div><div id="maxCombo" class="text-xl font-black text-orange-300">0</div></div>
+      <div class="bg-white/5 rounded-2xl p-3"><div class="text-[10px] text-slate-500 uppercase font-black">XP Earned</div><div id="xpEarned" class="text-xl font-black text-indigo-300">0</div></div>
+    </div>
+
+    <div id="review" class="text-left space-y-2 max-h-52 overflow-auto mb-5"></div>
+
+    <button id="againBtn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 font-black text-lg active:scale-95 transition">PLAY AGAIN ⚡</button>
+    <button id="homeBtn" class="w-full py-3 mt-2 rounded-2xl bg-white/5 border border-white/10 font-bold">HOME</button>
+  </div>
+</section>
+</main>
+
+<script>
+const App = (() => {
+  const ROUND = 10, SECONDS = 10, BASE = 100;
+  let db=[], deck=[], pool=[], index=0, active=null;
+  let score=0, streak=0, maxStreak=0, correct=0, time=SECONDS;
+  let timer=null, answering=false, used5050=false, usedTime=false, daily=false;
+  let results=[], sound=true;
+
+  const $ = id => document.getElementById(id);
+  const screens = {home:$("home"),quiz:$("quiz"),results:$("results")};
+
+  const audio = (() => {
+    let ctx=null;
+    const init=()=>{ if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==="suspended")ctx.resume(); };
+    const tone=(f,d=.1,type="sine",v=.045)=>{ if(!sound)return; init(); const o=ctx.createOscillator(),g=ctx.createGain(); o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+d); };
+    return {click:()=>tone(650,.07),good:()=>{tone(523,.1);setTimeout(()=>tone(659,.1),70);setTimeout(()=>tone(784,.18),140)},bad:()=>{tone(180,.18,"sawtooth");setTimeout(()=>tone(110,.22,"sawtooth"),100)},streak:()=>{tone(784,.08);setTimeout(()=>tone(988,.08),80);setTimeout(()=>tone(1175,.25),160)},win:()=>[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.25,"triangle"),i*100))};
+  })();
+
+  const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; };
+  const show = name => { Object.values(screens).forEach(x=>x.classList.add("hidden")); screens[name].classList.remove("hidden"); };
+
+  function validate(items){
+    if(!Array.isArray(items)) throw new Error("Question bank is not an array.");
+    const seen=new Set(), valid=[];
+    for(const q of items){
+      if(!q || typeof q.question!=="string" || !Array.isArray(q.options) || q.options.length!==4) continue;
+      const answerIndex=Number.isInteger(q.answer_index) ? q.answer_index : q.options.indexOf(q.answer);
+      if(answerIndex<0 || answerIndex>3) continue;
+      const key=q.question.trim().toLowerCase().replace(/\s+/g," ");
+      if(seen.has(key)) continue;
+      seen.add(key);
+      valid.push({...q,answer_index:answerIndex,category:q.category||"Bible"});
+    }
+    if(valid.length<10) throw new Error("Not enough valid questions.");
+    return valid;
+  }
+
+  async function init(){
+    $("soundBtn").onclick=()=>{sound=!sound;$("soundBtn").textContent=sound?"🔊":"🔇";if(sound)audio.click()};
+    $("playBtn").onclick=()=>start(false);
+    $("dailyBtn").onclick=()=>start(true);
+    $("againBtn").onclick=()=>start(false);
+    $("homeBtn").onclick=()=>show("home");
+    $("quitBtn").onclick=()=>{clearInterval(timer);show("home")};
+
+    try{
+      const r=await fetch("bible_trivia_validated.json",{cache:"no-store"});
+      if(!r.ok) throw new Error("JSON file not found");
+      db=validate(await r.json());
+      deck=shuffle([...db]);
+      $("loadStatus").innerHTML=`<span class="text-emerald-300">✓ ${db.length} validated questions ready</span>`;
+    }catch(e){
+      $("loadStatus").innerHTML=`<span class="text-red-300">Could not load the question bank. Keep the JSON file beside this HTML.</span>`;
+      console.error(e); return;
+    }
+    $("playBtn").disabled=false;$("dailyBtn").disabled=false;updateHome();
+  }
+
+  function stats(){
+    return JSON.parse(localStorage.getItem("bibleTriviaStats")||'{"high":0,"best":0,"xp":0,"games":0,"daily":""}');
+  }
+  function saveStats(s){localStorage.setItem("bibleTriviaStats",JSON.stringify(s))}
+  function level(){return Math.floor(stats().xp/1000)+1}
+  function updateHome(){
+    const s=stats();$("homeHigh").textContent=s.high;$("homeStreak").textContent=s.best;$("homeLevel").textContent=level();
+  }
+
+  function makePool(){
+    if(deck.length<ROUND) deck=shuffle([...db]);
+    const picked=[];
+    while(picked.length<ROUND && deck.length){
+      const q=deck.pop();
+      if(!picked.some(x=>x.question===q.question)) picked.push(q);
+    }
+    if(picked.length<ROUND) return shuffle([...db]).slice(0,ROUND);
+    return shuffle(picked);
+  }
+
+  function start(isDaily){
+    audio.click();daily=isDaily;score=0;streak=0;maxStreak=0;correct=0;index=0;results=[];used5050=false;usedTime=false;answering=false;
+    pool=makePool();
+    if(daily){
+      // Daily mode is still fair and local: it uses today's date to rotate the existing bank.
+      const seed=new Date().toISOString().slice(0,10);
+      const offset=[...seed].reduce((a,c)=>a+c.charCodeAt(0),0)%db.length;
+      pool=Array.from({length:ROUND},(_,i)=>db[(offset+i)%db.length]);
+    }
+    $("score").textContent="0";$("combo").textContent="🔥 x0";$("level").textContent=level();
+    $("fiftyBtn").disabled=false;$("timeBtn").disabled=false;$("fiftyBtn").classList.remove("opacity-40");$("timeBtn").classList.remove("opacity-40");
+    show("quiz");loadQuestion();
+  }
+
+  function loadQuestion(){
+    if(index>=pool.length){end();return}
+    active=pool[index];answering=false;time=SECONDS;
+    $("category").textContent=active.category;
+    $("question").textContent=active.question;
+    $("questionCount").textContent=`${index+1} / ${pool.length}`;
+    $("streakMessage").textContent=streak>=3?`🔥 ${streak} in a row!`:"";
+    const box=$("options");box.innerHTML="";
+    active.options.forEach((text,i)=>{
+      const b=document.createElement("button");
+      b.className="option w-full p-4 rounded-2xl bg-white/5 border border-white/10 text-left font-semibold text-slate-200";
+      b.innerHTML=`<span class="inline-flex w-8 h-8 rounded-xl bg-white/5 items-center justify-center mr-2 text-xs text-slate-400">${String.fromCharCode(65+i)}</span>${escapeHtml(text)}`;
+      b.onclick=e=>answer(i,b,e);
+      box.appendChild(b);
+    });
+    startTimer();render();
+  }
+
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+  function startTimer(){
+    clearInterval(timer);
+    $("timer").style.width="100%";$("timer").className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 progress";
+    timer=setInterval(()=>{
+      time=Math.max(0,time-.1);
+      $("timer").style.width=`${time/SECONDS*100}%`;
+      $("timerText").textContent=`${time.toFixed(1)}s`;
+      if(time<=3){$("timer").className="h-full bg-gradient-to-r from-red-500 to-orange-400 progress";if(Math.round(time*10)%5===0)audio.click()}
+      if(time<=0){clearInterval(timer);answer(-1,null,null)}
+    },100);
+  }
+
+  function answer(choice,btn,event){
+    if(answering)return;answering=true;clearInterval(timer);
+    const buttons=[...$("options").querySelectorAll("button")];
+    buttons.forEach(b=>b.disabled=true);
+    const ok=choice===active.answer_index;
+    results.push({q:active.question,correct:active.options[active.answer_index],ok});
+    if(ok){
+      correct++;streak++;maxStreak=Math.max(maxStreak,streak);
+      const multiplier=1+Math.min(streak,10)*.12;
+      const speed=Math.floor(time*8);
+      const earned=Math.floor(BASE*multiplier)+speed+(streak>=5?50:0);
+      score+=earned;
+      if(btn)btn.classList.add("correct");
+      audio.good();
+      if(streak%3===0){audio.streak();confetti({particleCount:45,spread:70,origin:{y:.7}})}
+      if(event)floatScore(earned,event.clientX,event.clientY);
+      $("streakMessage").textContent=streak>=5?`🔥 ON FIRE! +${earned}`:`🔥 ${streak} streak • +${earned}`;
+    }else{
+      streak=0;
+      if(btn)btn.classList.add("wrong");
+      if(buttons[active.answer_index])buttons[active.answer_index].classList.add("correct");
+      buttons.forEach((b,i)=>{if(i!==active.answer_index && i!==choice)b.classList.add("dim")});
+      audio.bad();
+      $("streakMessage").textContent=choice===-1?"⏰ Time's up!":"💡 The answer is highlighted";
+      $("app").classList.remove("animate-shake");void $("app").offsetWidth;$("app").classList.add("animate-shake");
+    }
+    render();
+    setTimeout(()=>{index++;loadQuestion()},900);
+  }
+
+  function floatScore(n,x,y){
+    const d=document.createElement("div");d.className="score-float";d.textContent=`+${n}`;d.style.left=`${x}px`;d.style.top=`${y}px`;document.body.appendChild(d);setTimeout(()=>d.remove(),1000);
+  }
+
+  function render(){
+    $("score").textContent=score;$("combo").textContent=`🔥 x${streak}`;$("level").textContent=level();
+  }
+
+  function use5050(){
+    if(used5050||answering)return;used5050=true;$("fiftyBtn").disabled=true;$("fiftyBtn").classList.add("opacity-40");
+    const wrong=[0,1,2,3].filter(i=>i!==active.answer_index);shuffle(wrong);
+    const buttons=[...$("options").querySelectorAll("button")];
+    wrong.slice(0,2).forEach(i=>{buttons[i].disabled=true;buttons[i].classList.add("dim")});audio.click();
+  }
+
+  function useTime(){
+    if(usedTime||answering)return;usedTime=true;time=Math.min(SECONDS,time+5);$("timeBtn").disabled=true;$("timeBtn").classList.add("opacity-40");audio.good();
+  }
+
+  $("fiftyBtn").onclick=use5050;$("timeBtn").onclick=useTime;
+
+  function end(){
+    clearInterval(timer);audio.win();
+    const accuracy=Math.round(correct/pool.length*100), s=stats(), oldHigh=s.high;
+    const xp=score+correct*25;
+    s.high=Math.max(s.high,score);s.best=Math.max(s.best,maxStreak);s.xp+=xp;s.games++;
+    const today=new Date().toISOString().slice(0,10);s.daily=today;saveStats(s);
+    $("finalScore").textContent=score;$("accuracy").textContent=`${accuracy}%`;$("maxCombo").textContent=maxStreak;$("xpEarned").textContent=`+${xp}`;
+    $("newRecord").classList.toggle("hidden",score<=oldHigh);
+    $("resultEmoji").textContent=accuracy===100?"👑":accuracy>=80?"🔥":accuracy>=60?"⭐":"📖";
+    $("resultTitle").textContent=accuracy===100?"PERFECT RUN!":accuracy>=80?"You're on fire!":accuracy>=60?"Strong run!":"Keep learning!";
+    $("resultMessage").textContent=`${correct}/${pool.length} correct • Level ${level()} • ${daily?"Daily Challenge":"Classic Round"}`;
+    $("review").innerHTML=results.map((r,i)=>`<div class="p-3 rounded-xl bg-white/5 border border-white/5 text-xs"><span class="${r.ok?"text-emerald-300":"text-red-300"} font-black">${r.ok?"✓":"✗"} Q${i+1}</span><div class="mt-1 text-slate-300">${escapeHtml(r.q)}</div>${r.ok?"":`<div class="mt-1 text-emerald-300 font-bold">Answer: ${escapeHtml(r.correct)}</div>`}</div>`).join("");
+    if(accuracy>=80)confetti({particleCount:120,spread:100,origin:{y:.65}});
+    updateHome();show("results");
+  }
+
+  window.addEventListener("DOMContentLoaded",init);
+})();
+</script>
+</body>
+</html>
