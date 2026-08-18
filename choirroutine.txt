@@ -1,27 +1,14 @@
 [notices]
 Choir fellowship takes place every Saturday. Please come prepared and on time.
-
+Karthik 14,21,28 : Christmas & carol practice. 9:00 - 10:50
 
 [schedule]
-month1|Shrawn
-date|16
-time1|9:50 - 10:30
-work1|Choir practice & meeting
-date|23:
-time1|9:00 - 9:40
-work1|Choir practice
-time2|9:40 - 10:40
-work2|Choir class (Swatantrata)
-date|30:
-time1|9:00 - 9:40
-work1|Choir practice
-time2|9:40 - 10:40
-work2|Choir class (Leadership & Responsibility)
 
-month2|Bhadra
+month1|Bhadra
 date|6:
 time1|9:40 - 10:40
 work1|Choir practice & meeting
+
 date|13:
 time1|9:40 - 10:40
 work1|(2 sat practice 30 min each.)
@@ -32,17 +19,37 @@ work1|Vocal practice
 time2|10:15 - 10:40
 work2|Choir practice(Uthera)
 
-
 date|27:
-time1|9:40 - 10:40 
-work1|Choir practice
+time1|9:40 - 10:10 
+work1|New Songs practice
+time2|10:10 - 10:40 
+work2|Choir practice
 
+month2|Ashoj
 
+date|3:
+time1|9:40 - 10:40
+work1|prac + new songs/meetings
 
+date|10:
+time1|9:40 - 10:40
+work1|(2 sat practice 30 min each)
 
+date|17:
+time1|9:50 - 10:15
+work1|Vocal practice
+time2|10:15 - 10:40
+work2|Choir practice(Uthera)
 
+date|24:
+time1|9:40 - 10:40
+work1|(2 sat practice 30 min each.)
 
-
+date|31:
+time1|9:40 - 10:10 
+work1|New Songs practice
+time2|10:10 - 10:40 
+work2|Choir practice
 
 [layout]
 5sats:
